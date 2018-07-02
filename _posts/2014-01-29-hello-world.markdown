@@ -7,19 +7,14 @@ author:     "Sandii"
 header-img: ""
 catalog: true
 tags:
-    - Test
+    - Tanhauser Gate
 ---
 
-## Orion
-- I've seen things people wouldn't believe
+- I've seen things you people wouldn't believe
 - attack ship on fire off the shoulder off Orion
-
-## Tanhauser Gate
-- I watched C-beams glitter in the darkness near the Tanharser Gate
-
-## Tears in rain
+- I watched C-beams glitter in the darkness near the Tanhauser Gate
 - All those moments will be lost in time
-- Like tears in rain
+- Like tears in rain..
 
 
 

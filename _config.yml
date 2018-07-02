@@ -3,7 +3,7 @@ title: "Sandii Blog"
 SEOTitle: "Sandii Blog"
 header-img: "img/home-bg.jpg"
 email: "chenzhibpt@qq.com"
-description: "Learn Summarize Research | Front-End Coding Tech"
+description: "All those moments will be lost in time like tears in rain.."
 keyword: "Sandii, Sandii的博客, Sandii Blog, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 编程"
 url: "https://sandii.github.io/"        # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
@@ -72,7 +72,7 @@ netease_comment: false
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "梦如人生，快乐永记取<br>悲苦深刻藏骨髓"
+sidebar-about-description: "I've seen things you people wouldn't believe."
 sidebar-avatar: /img/avatar-sandii.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
