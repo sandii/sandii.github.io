@@ -1,9 +1,9 @@
 # Site settings
 title: "Sandii Blog"
-SEOTitle: "Sandii的博客 | Sandii Blog"
+SEOTitle: "Sandii Blog"
 header-img: "img/home-bg.jpg"
 email: "chenzhibpt@qq.com"
-description: "学习 总结 探索 | 前端 编程 世界"
+description: "Learn Summarize Research | Front-End Coding Tech"
 keyword: "Sandii, Sandii的博客, Sandii Blog, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 编程"
 url: "https://sandii.github.io/"        # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
