@@ -1,8 +1,8 @@
 # Site settings
-title: Sandii Blog
-SEOTitle: Sandii的博客 | Sandii Blog
-header-img: img/home-bg.jpg
-email: chenzhibpt@qq.com
+title: "Sandii Blog"
+SEOTitle: "Sandii的博客 | Sandii Blog"
+header-img: "img/home-bg.jpg"
+email: "chenzhibpt@qq.com"
 description: "学习 总结 探索 | 前端 编程 世界"
 keyword: "Sandii, Sandii的博客, Sandii Blog, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 编程"
 url: "https://sandii.github.io/"        # your host, for absolute URL
