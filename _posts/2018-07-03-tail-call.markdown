@@ -1,0 +1,194 @@
+---
+layout:     post
+title:      "尾调用 Tail Call"
+subtitle:   ""
+date:       2018-07-03 12:00:00
+author:     "Sandii"
+header-img: ""
+catalog: true
+tags:
+    - Javascript
+---
+
+## 什么是尾调用 Tail Call
+- 函数最后一步调用另一个函数
+- 一定要是**最后一步**
+```
+// 以下两种情况都不是尾调用
+function f (x) {
+    return g(x) + 1; // 调用后还进行了+1的操作
+}
+function f (x) {
+    g(x); // 最后一步是隐式的 return undefined;
+}
+```
+
+## 为什么尾调用最优
+- 每次函数调用都会在内存形成一个`调用帧` `call frame`
+- 而尾调用到了最后一步，函数内的所有信息都已无用，所占的内存也会被释放
+- 通过一个求和函数理解一下：
+```
+// sum(5) = 1 + 2 + 3 + 4 + 5 = 15
+// 1. 常规调用
+const sum = x => {
+	if (x === 1)
+		return x;
+	else
+		return x + sum(x - 1);
+}
+// 计算过程
+(5 + sum(4))
+(5 + (4 + sum(3)))
+(5 + (4 + (3 + sum(2))))
+(5 + (4 + (3 + (2 + (sum(1))))))
+(5 + (4 + (3 + (2 + 1))))
+15
+
+// 每个圆括号都是一次函数执行的调用帧
+// 因为有上一步的计算结果存在
+// 导致每次函数的调用帧都不能被释放
+// 随着计算进行，调用帧越积越多
+
+
+// 2. 尾调用
+const _sum = (x, total = 0) => {
+	if (x === 0)
+		return total;
+	else
+		return _sum(x - 1, total + x);
+};
+// 计算过程
+_sum(5, 0);
+_sum(4, 5);
+_sum(3, 9);
+_sum(2, 12);
+_sum(1, 14);
+_sum(0, 15);
+15
+// 从始至终都只有一个调用帧的存在
+```
+
+
+## 尾递归 Tail Recursion
+- 递归即函数`自调用`，上面的例子就是把`普通递归`优化为`尾递归`
+- 优化后可以极大地节省内存，避免内存溢出
+- ES6规定编译器必须具备尾递归优化
+- 优化的思路是把每次的计算结果由`函数体内`改在`参数`上
+
+```
+// 把fibonacci和factorial的递归函数改为尾递归
+'use strict'
+
+function fib1 (n) {
+	if (n <= 2) return 1;
+	return fib1(n - 1) + fib1(n - 2);
+}
+function fib2 (n, rs1 = 1, rs2 = 1) {
+	if (n === 0) return 1;
+	if (n === 1) return rs2;
+	return fib2(n - 1, rs2, rs1 + rs2);
+}
+function fact1 (n) {
+	if (n <= 1) return 1;
+	return n * fact1(n - 1);
+}
+function fact2 (n, rs = 1) {
+	if (n <= 1) return rs;
+	return fact2(n - 1, n * rs);
+}
+
+let sta, end, n;
+
+n = 40;
+sta = Date.now();
+console.log(fib1(n));
+end = Date.now();
+console.log(`It takes ${end - sta}ms`);
+
+sta = Date.now();
+console.log(fib2(n));
+end = Date.now();
+console.log(`It takes ${end - sta}ms`);
+// 区别很大
+
+n = 100;
+sta = Date.now();
+console.log(fact1(n));
+end = Date.now();
+console.log(`It takes ${end - sta}ms`);
+
+sta = Date.now();
+console.log(fact2(n));
+end = Date.now();
+console.log(`It takes ${end - sta}ms`);
+// 区别不大
+
+// 传统的fibonacci严重消耗内存，尾递归优化后效率显著提高
+// 配置较好的电脑在let n=40左右即可看出明显效果
+// 相比较，factorial效果不是很显著
+```
+
+
+## 严格模式
+- es6的尾调用优化只在严格模式下有效
+- 因为严格模式会禁用`func.arguments`和`func.caller`，否则调用帧才仍然无法释放
+
+## 尾递归优化的实现
+
+> 思路是将递归转换为循环
+
+1. 蹦床函数
+```
+// 若返回函数，循环执行，直到返回数值为止
+function trampoline (f) {
+	while ( f && f instanceof Function ) {
+		f = f();
+	}
+	return f;
+}
+// 尾递归函数也需要做相应改动
+// 尾调用处改为返回函数
+function factorial (n, total = 1) {
+	if ( n <= 1 ) return total;
+	return factorial.bind(null, n - 1, n * total);
+}
+function fibonacci (n, rs1 = 1, rs2 = 1) {
+	if ( n <= 1 ) return rs2;
+	return fibonacci.bind(null, n - 1, rs2, rs1 + rs2);
+}
+// 调用
+trampoline( factorial(100) );
+trampoline( fibonacci(100) );
+```
+
+2. 尾递归优化的真实实现比蹦床函数更复杂一些
+```
+function tco (f) {
+	let value;
+	let active = false;
+	let accumulated = [];
+
+	return function () {
+    	accumulated.push(arguments);
+    	if (!active) {
+	     	active = true;
+	      	while (accumulated.length) {
+	      		value = f.apply(this, accumulated.shift());
+	      	}
+	      	active = false;
+	      	return value;
+    	}
+  	};
+}
+let fibonacci = tco(function (n, rs1 = 1, rs2 = 1) {
+	if ( n <= 1 ) return rs2;
+	return fibonacci(n - 1, rs2, rs1 + rs2);
+});
+```
+
+
+## 参考
+- <http://www.ruanyifeng.com/blog/2015/04/tail-call.html> 阮一峰
+- <https://stackoverflow.com/questions/33923/what-is-tail-recursion> Lorin Hochstein & Matthias Braun
+- <https://en.wikipedia.org/wiki/Tail_call> wikipedia
+

@@ -2,7 +2,7 @@
 layout:     post
 title:      "Hello World"
 subtitle:   "This is my first article"
-date:       2018-07-02 12:00:00
+date:       2018-06-30 12:00:00
 author:     "Sandii"
 header-img: ""
 catalog: true
