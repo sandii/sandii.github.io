@@ -32,10 +32,10 @@ function f (x) {
 // sum(5) = 1 + 2 + 3 + 4 + 5 = 15
 // 1. 常规调用
 const sum = x => {
-	if (x === 1)
-		return x;
-	else
-		return x + sum(x - 1);
+    if (x === 1)
+        return x;
+    else
+        return x + sum(x - 1);
 }
 // 计算过程
 (5 + sum(4))
@@ -53,10 +53,10 @@ const sum = x => {
 
 // 2. 尾调用
 const _sum = (x, total = 0) => {
-	if (x === 0)
-		return total;
-	else
-		return _sum(x - 1, total + x);
+    if (x === 0)
+        return total;
+    else
+        return _sum(x - 1, total + x);
 };
 // 计算过程
 _sum(5, 0);
@@ -81,21 +81,21 @@ _sum(0, 15);
 'use strict'
 
 function fib1 (n) {
-	if (n <= 2) return 1;
-	return fib1(n - 1) + fib1(n - 2);
+    if (n <= 2) return 1;
+    return fib1(n - 1) + fib1(n - 2);
 }
 function fib2 (n, rs1 = 1, rs2 = 1) {
-	if (n === 0) return 1;
-	if (n === 1) return rs2;
-	return fib2(n - 1, rs2, rs1 + rs2);
+    if (n === 0) return 1;
+    if (n === 1) return rs2;
+    return fib2(n - 1, rs2, rs1 + rs2);
 }
 function fact1 (n) {
-	if (n <= 1) return 1;
-	return n * fact1(n - 1);
+    if (n <= 1) return 1;
+    return n * fact1(n - 1);
 }
 function fact2 (n, rs = 1) {
-	if (n <= 1) return rs;
-	return fact2(n - 1, n * rs);
+    if (n <= 1) return rs;
+    return fact2(n - 1, n * rs);
 }
 
 let sta, end, n;
