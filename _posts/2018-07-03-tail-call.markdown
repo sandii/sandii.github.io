@@ -4,7 +4,7 @@ title:      "尾调用 Tail Call"
 subtitle:   ""
 date:       2018-07-03 12:00:00
 author:     "Sandii"
-header-img: ""
+header-img: "img/posts/tail-call-bg.jpg"
 catalog: true
 tags:
     - Javascript
@@ -27,6 +27,7 @@ function f (x) {
 - 每次函数调用都会在内存形成一个`调用帧` `call frame`
 - 而尾调用到了最后一步，函数内的所有信息都已无用，所占的内存也会被释放
 - 通过一个求和函数理解一下：
+
 ```
 // sum(5) = 1 + 2 + 3 + 4 + 5 = 15
 // 1. 常规调用
