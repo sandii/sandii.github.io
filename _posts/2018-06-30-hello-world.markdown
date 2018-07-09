@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Hello World"
-subtitle:   "This is my first article"
+subtitle:   "My First Article"
 date:       2018-06-30 12:00:00
 author:     "Sandii"
 header-img: ""
@@ -16,6 +16,7 @@ tags:
 - All those moments will be lost in time
 - Like tears in rain..
 
+> Cover Picture: Blade Runner
 
 
 
