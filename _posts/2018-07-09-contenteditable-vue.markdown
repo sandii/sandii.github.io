@@ -24,7 +24,7 @@ tags:
 ```
 |数据流|实现方式|
 |-|-|
-|model-to-view|将data赋值给value属性|
+|model-to-view|将data响应式地赋值给value属性|
 |view-to-model|input事件回调中，将value属性赋值给data|
 
 
@@ -48,8 +48,10 @@ tags:
 
 |数据流|实现方式|
 |-|-|
-|model-to-view|将data赋值给v-html|
+|model-to-view|将data响应式地赋值给innerHTML|
 |view-to-model|input事件回调中，将innerHTML属性赋值给data|
+
+> 修改元素的原生属性最好使用指令，修改innerHTML可以直接使用vue内置指令v-html
 
 ```
 <div 
@@ -57,11 +59,30 @@ tags:
 	v-html="a"
 	@input="a = $event.target.innerHTML"><div>
 ```
-## 光标乱跑
-- 按下葫芦起了瓢，`value`的问题解决了，但给`innerHTML`会触发元素重新渲染，每输入一个字符，光标都会跳回到最开始
+- 按下葫芦起了瓢，`value`的问题解决了，但给`innerHTML`重新赋值会触发元素重新渲染，每输入一个字符，光标都会跳回到最开始
 - demo: <https://jsfiddle.net/sandii/k4v2w65t/13/>
 
-## 解决2
+## 方案1：阻止频繁修改innerHTML
+- 不在输入过程中频繁地修改`innerHTML`
+```
+<div 
+    contenteditable 
+    class="editor"
+    v-test="a"		// 使用自定义指令实现 model-to-view
+    data-lock="0"	// 锁放在元素的dataset上
+    @blur="$event.target.dataset.lock = '0'"	// 失焦时解锁
+    @focus="$event.target.dataset.lock = '1'"	// 聚焦时加锁
+    @input="a = $event.target.innerHTML"></div>	// view-to-model 数据流不变
+
+// 自定义指令
+directives : {
+  	test (el, { value }) {
+    	if (el.dataset.lock === '1') return;
+    	el.innerHTML = value;
+    },
+},
+```
+- demo: <https://jsfiddle.net/sandii/k4v2w65t/31/>
 
 ## 背单词
 

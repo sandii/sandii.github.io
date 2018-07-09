@@ -4,7 +4,7 @@ title:      "Hello World"
 subtitle:   "My First Article"
 date:       2018-06-30 12:00:00
 author:     "Sandii"
-header-img: ""
+header-img: "img/posts/bg-000.jpg"
 catalog: true
 tags:
     - Tanhauser Gate
