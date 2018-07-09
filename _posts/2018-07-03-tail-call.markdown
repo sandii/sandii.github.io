@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "尾调用和尾递归 Tail Call & Tail Recursion"
-subtitle:   ""
+title:      "尾调用和尾递归"
+subtitle:   "Tail Call & Tail Recursion"
 date:       2018-07-03 12:00:00
 author:     "Sandii"
-header-img: "img/posts/tail-call-bg.jpg"
+header-img: "img/posts/bg-001.jpg"
 catalog: true
 tags:
     - Javascript
