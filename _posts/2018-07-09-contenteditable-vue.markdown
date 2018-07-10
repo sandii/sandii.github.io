@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Vue双向绑定contenteditable"
+title:      "Vue中contenteditable元素的双向绑定"
 subtitle:   "Two-way binding on contenteditable of Vue"
 date:       2018-07-09 12:00:00
 author:     "Sandii"
@@ -22,6 +22,7 @@ tags:
 	:value="a" 
 	@input="a = $event.target.value" />
 ```
+
 |数据流|实现方式|
 |-|-|
 |model-to-view|将data响应式地赋值给value属性|
