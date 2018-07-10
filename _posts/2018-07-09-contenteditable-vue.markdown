@@ -1,21 +1,25 @@
 ---
 layout:     post
 title:      "Vue中contenteditable元素的双向绑定"
-subtitle:   "Two-way binding on contenteditable of Vue"
+subtitle:   "Two-way Binding of Vue on Contenteditable"
 date:       2018-07-09 12:00:00
 author:     "Sandii"
 header-img: "img/posts/bg-002.jpg"
 catalog: true
 tags:
     - Javascript
+    - Vue
 ---
 
 ## v-model双向绑定
 - vue用内置的`v-model`指令实现`双向绑定`
+
 ```
 <input type="text" v-model="a" />
 ```
+
 - 上面的代码等价于：
+
 ```
 <input 
 	type="text"
@@ -31,11 +35,14 @@ tags:
 
 ## contenteditable元素的双向绑定
 - 但用在contenteditable的元素上就不灵了：
+
 ```
 // 不灵
 <div contenteditable v-model="a"><div>
 ```
+
 - 因为`div`是没有`value`属性的：
+
 ```
 // 不灵
 <div 
@@ -60,11 +67,13 @@ tags:
 	v-html="a"
 	@input="a = $event.target.innerHTML"><div>
 ```
+
 - 按下葫芦起了瓢，`value`的问题解决了，但给`innerHTML`重新赋值会触发元素重新渲染，每输入一个字符，光标都会跳回到最开始
 - demo: <https://jsfiddle.net/sandii/k4v2w65t/13/>
 
 ## 方案1：阻止频繁修改innerHTML
 - 不在输入过程中频繁地修改`innerHTML`
+
 ```
 <div 
     contenteditable 
@@ -83,6 +92,7 @@ directives : {
     },
 },
 ```
+
 - demo: <https://jsfiddle.net/sandii/k4v2w65t/31/>
 
 ## 背单词
