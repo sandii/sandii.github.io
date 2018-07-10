@@ -37,9 +37,9 @@ tags:
 <div contenteditable v-model="a"><div>
 // 等价于
 <div 
-	contenteditable 
-	:value="a" // 问题出在这
-	@input="a = $event.target.value"><div>
+    contenteditable 
+    :value="a" // 问题出在这
+    @input="a = $event.target.value"><div>
 ```
 
 ## innerHTML代替value
@@ -54,9 +54,9 @@ tags:
 
 ```
 <div 
-	contenteditable 
-	v-html="a"
-	@input="a = $event.target.innerHTML"><div>
+    contenteditable 
+    v-html="a"
+    @input="a = $event.target.innerHTML"><div>
 ```
 
 - 按下葫芦起了瓢，`value`的问题解决了，但每输入一个字符，光标都会跳回到最开始
@@ -82,8 +82,8 @@ tags:
 directives : {
   	test (el, { value }) {
         // 正在输入 不执行m-v
-    	if (el.dataset.inputting === '1') return;
-    	el.innerHTML = value;
+        if (el.dataset.inputting === '1') return;
+        el.innerHTML = value;
     },
 },
 ```
