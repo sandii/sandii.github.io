@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Vue中contenteditable元素的双向绑定"
+title:      "Vue的contenteditable元素双向绑定"
 subtitle:   "Two-way Binding of Vue on Contenteditable"
 date:       2018-07-09 12:00:00
 author:     "Sandii"
@@ -16,48 +16,39 @@ tags:
 
 ```
 <input type="text" v-model="a" />
-```
-
-- 上面的代码等价于：
-
-```
+// 等价于：
 <input 
 	type="text"
 	:value="a" 
 	@input="a = $event.target.value" />
 ```
 
-|数据流|实现方式|
+|数据流|实现|
 |-|-|
-|model-to-view|将data响应式地赋值给value属性|
-|view-to-model|input事件回调中，将value属性赋值给data|
+|model-view|:value="data"|
+|view-model|@input="data = el.value"|
 
 
-## contenteditable元素的双向绑定
-- 但用在contenteditable的元素上就不灵了：
+## contenteditable元素双向绑定
+- 但用在contenteditable的元素上就不灵了，因为`div`没有`value`属性
 
 ```
 // 不灵
 <div contenteditable v-model="a"><div>
-```
-
-- 因为`div`是没有`value`属性的：
-
-```
-// 不灵
+// 等价于
 <div 
 	contenteditable 
-	:value="a" 
+	:value="a" // 问题出在这
 	@input="a = $event.target.value"><div>
 ```
 
 ## innerHTML代替value
-- 找到原因就好办了，用`div`的`innerHTML`属性代替`value`：
+- 找到原因就好办了，在`div`上用`innerHTML`代替`value`：
 
-|数据流|实现方式|
+|数据流|实现|
 |-|-|
-|model-to-view|将data响应式地赋值给innerHTML|
-|view-to-model|input事件回调中，将innerHTML属性赋值给data|
+|model-view|:v-html="a"|
+|view-model|@input="data = el.innerHTML"|
 
 > 修改元素的原生属性最好使用指令，修改innerHTML可以直接使用vue内置指令v-html
 
@@ -68,32 +59,63 @@ tags:
 	@input="a = $event.target.innerHTML"><div>
 ```
 
-- 按下葫芦起了瓢，`value`的问题解决了，但给`innerHTML`重新赋值会触发元素重新渲染，每输入一个字符，光标都会跳回到最开始
-- demo: <https://jsfiddle.net/sandii/k4v2w65t/13/>
+- 按下葫芦起了瓢，`value`的问题解决了，但每输入一个字符，光标都会跳回到最开始
+- 这是因为`model-view`时，给`innerHTML`重新赋值会触发元素重新渲染
+- 所以该问题转换为 **如何阻止输入时重新渲染**
+- demo: <https://jsfiddle.net/sandii/k4v2w65t/35/>
 
-## 方案1：阻止频繁修改innerHTML
-- 不在输入过程中频繁地修改`innerHTML`
+## 方案1：自定义指令
+1. 增加一个标志位表示是否正在输入，这里放在元素的`dataset`上
+1. 用一个自定义指令代替`v-html`执行`model-view`，判断如果是输入中，则不执行`model-view`
+1. 用`focus / blur`事件切换是否正在输入
 
 ```
 <div 
     contenteditable 
-    class="editor"
-    v-test="a"		// 使用自定义指令实现 model-to-view
-    data-lock="0"	// 锁放在元素的dataset上
-    @blur="$event.target.dataset.lock = '0'"	// 失焦时解锁
-    @focus="$event.target.dataset.lock = '1'"	// 聚焦时加锁
-    @input="a = $event.target.innerHTML"></div>	// view-to-model 数据流不变
+    v-test="a"		    // 使用自定义指令实现 model-to-view
+    data-inputting="0"	// 锁放在元素的dataset上
+    @blur="$event.target.dataset.inputting = '0'"// 失焦解锁
+    @focus="$event.target.dataset.inputting = '1'"// 聚焦加锁
+    @input="a = $event.target.innerHTML"></div>	// v-m 不变
 
 // 自定义指令
 directives : {
   	test (el, { value }) {
-    	if (el.dataset.lock === '1') return;
+        // 正在输入 不执行m-v
+    	if (el.dataset.inputting === '1') return;
     	el.innerHTML = value;
     },
 },
 ```
 
-- demo: <https://jsfiddle.net/sandii/k4v2w65t/31/>
+- demo: <https://jsfiddle.net/sandii/k4v2w65t/34/>
+
+## 方案2：watch
+1. 整体思路不变，但把`model-view`以及相关判断从自定义指令改在了`watch`上
+1. 好处是避免把标志位放在元素的`dataset`上
+
+```
+<div 
+    contenteditable
+    v-html="viewA"
+    @blur="inputting = false"// 失焦解锁
+    @focus="inputting = true"// 聚焦加锁
+    @input="a = $event.target.innerHTML"></div>
+
+data : vm => ({
+    a : 'hello',
+    viewA : 'hello',
+    inputting : false,
+}),
+watch : {
+    a (v) {
+        if (inputting) return;
+        this.viewA = v;
+    },
+},
+```
+
+- demo: <https://jsfiddle.net/sandii/k4v2w65t/42/>
 
 ## 背单词
 
@@ -103,8 +125,6 @@ directives : {
 
 ## 参考
 
-- <https://stackoverflow.com/questions/47177496/vuejs-2-update-contenteditable-in-component-from-parent-method> user6748331
-- <https://stackoverflow.com/questions/46487619/contenteditable-div-append-a-html-element-and-v-model-it-in-vuejs> asemahle
 - <https://github.com/vuejs/vue/issues/47>
 - <https://segmentfault.com/a/1190000008261449> eco
 
