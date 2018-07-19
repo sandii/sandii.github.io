@@ -4,7 +4,7 @@ title:      "Vue的contenteditable元素双向绑定"
 subtitle:   "Two-way Binding of Vue on Contenteditable"
 date:       2018-07-09 12:00:00
 author:     "Sandii"
-header-img: "img/posts/bg-002.jpg"
+header-img: "img/banner/bg-002.jpg"
 catalog: true
 tags:
     - Javascript
