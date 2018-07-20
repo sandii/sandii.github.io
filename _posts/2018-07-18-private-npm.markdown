@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "用sinopia搭建私有npm"
-subtitle:   "build private npm with sinopia"
+subtitle:   "Build Private NPM with Sinopia"
 date:       2018-07-19 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-003.jpg"
@@ -113,7 +113,7 @@ max_users: -1
 
 ## 实操流程
 
-1. 更新发布。和公有包没啥区别，只需要确认registry指向自己的私有服务即可。
+- 更新发布。和公有包没啥区别，只需要确认registry指向自己的私有服务即可。
 
 ```
 npm login         # 登录
@@ -122,14 +122,14 @@ npm publish       # 发布
 # 然后是git发布，省略..
 ```
 
-2. 私有包的更新者需要到引用该私有包的所有项目中进行更新。
+- 私有包的更新者需要到引用该私有包的所有项目中进行更新。
 
 ```
 npm i package-name@latest # 这样会修改packages.json中私有包的版本号
 # 把修改过的packages.json发布到git上，省略..
 ```
 
-3. 其他开发者在从git上fetch代码时，若发现`packages.json`有更新，就需要确认是否是私有包版本更新，若是，`npm i`即可
+- 其他开发者在从git上fetch代码时，若发现`packages.json`有更新，就需要确认是否是私有包版本更新，若是，`npm i`即可
 
 **全剧终**
 
