@@ -4,7 +4,7 @@ title:      "尾调用和尾递归"
 subtitle:   "Tail Call & Tail Recursion"
 date:       2018-07-03 12:00:00
 author:     "Sandii"
-header-img: "http://img1.ph.126.net/3UFg8jcuRyfH4jdDRN8_vA==/1939081114660131139.jpg"
+header-img: "img/banner/bg-001.jpg"
 catalog: true
 tags:
     - Javascript
