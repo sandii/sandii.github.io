@@ -3,7 +3,7 @@ layout:     post
 title:      "为什么Unix/Linux不允许硬链接指向目录 【翻译】"
 subtitle:   "Why Are Hard Links to Directories Not Allowed in UNIX/Linux?"
 date:       2018-07-21 12:00:00
-author:     "Danny Dulai & G-Man"
+author:     "Sandii"
 header-img: "img/banner/bg-004.jpg"
 catalog: true
 tags:
@@ -80,6 +80,7 @@ lrwxr-xr-x  1 danny  staff    5 Oct 13 18:13 test2@ -> test1
 4.0K    ./test2
 242M    .
 ```
+By Danny Dulai & G-Man
 
 ## 背单词
 
