@@ -4,11 +4,13 @@ title:      "Vue源码学习：从何下手?"
 subtitle:   "Learning Vue Source Code： Where to Start?"
 date:       2018-07-21 12:00:00
 author:     "Sandii"
-header-img: "img/banner/bg-005.jpg"
+header-img: "img/banner/bg-004.jpg"
 catalog: true
 tags:
     - vue
 ---
+
+## 翻译
 
 > Libraries can also become a crutch if you never venture beyond them ... I’ve emphasized the necessity of learning how things work and not simply what they do. There are many wonderful libraries out there, ... but having no understanding of what’s going on behind the scenes will be detrimental to both you and your web application. -- Jeremy Keith
 
@@ -42,7 +44,7 @@ new Vue({
 
 
 ## dist/vue.js
-那么`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
+那么我们就看看`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
 ```
 README.md
 vue.common.js
@@ -81,7 +83,7 @@ vue.runtime.min.js
 ```
 "build": "node scripts/build.js",
 ```
-`npm run build`命令就是执行`scripts/build.js`这个脚本，毫不犹豫打开它。整个脚本其实就干了两件事：
+`npm run build`命令就是执行`scripts/build.js`这个脚本嘛，毫不犹豫打开它。整个脚本其实就干了两件事：
 
 ```
 // 1. dist目录不存在的话就创建一个
@@ -105,7 +107,7 @@ let builds = require('./config').getAllBuilds()
 exports.getAllBuilds = () => Object.keys(builds).map(genConfig)
 ```
 
-这里面又有一个builds变量，找到这个变量，这回水平一般的我也能看懂了，这是构建函数的配置文件，根据它构建出dist目录下的那些文件。我们只看刚才用标签引用的vue.js，其他先不管：
+这里面又有一个builds变量，找到这个变量，这回水平这么一般的我也能看懂了，这是构建函数的配置文件，根据它构建出dist目录下的那些文件。我们只看刚才用标签引用的vue.js，其他先不管：
 
 ```
 const builds = {
@@ -128,10 +130,10 @@ const builds = {
 web: resolve('src/platforms/web'),
 ```
 
-所以`dist/vue.js`是由`src/platforms/web/entry-runtime-with-compiler.js`编译来的。而这个文件名的含义也证实了我们的猜测：它是精简版+编译器的入口。
+所以`dist/vue.js`是由`src/platforms/web/entry-runtime-with-compiler.js`编译来的。而这个文件名的含义也证实了我们的猜测：精简版+编译器的入口。
 
 ## 尾声
-终于，`src/platforms/web/entry-runtime-with-compiler.js`就是我们要找的通向新世界的大门，那么这一篇文章的任务也就完成了。探索新世界的乐趣就留给下一篇了。收工。
+终于，`src/platforms/web/entry-runtime-with-compiler.js`就是我们要找的通向新世界的大门，那么这一篇文章的任务也就完成了。探索门内的新世界的乐趣就留给下一篇了。收工。
 
 
 ## 背单词
@@ -141,4 +143,4 @@ web: resolve('src/platforms/web'),
 |crutch|拐杖|不要和crotch裤裆搞混了：open crotch pants开裆裤|
 |detrimental|有害的|-|
 
-> 封面图： 槐柏树街 - 2013春 - Sandii
+> 封面图： 天山 - 2015夏 - Sandii
