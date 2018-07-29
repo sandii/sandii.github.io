@@ -42,7 +42,7 @@ new Vue({
 
 
 ## dist/vue.js
-那么`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
+那么我们就看看`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
 ```
 README.md
 vue.common.js
@@ -81,7 +81,7 @@ vue.runtime.min.js
 ```
 "build": "node scripts/build.js",
 ```
-`npm run build`命令就是执行`scripts/build.js`这个脚本，毫不犹豫打开它。整个脚本其实就干了两件事：
+`npm run build`命令就是执行`scripts/build.js`这个脚本嘛，毫不犹豫打开它。整个脚本其实就干了两件事：
 
 ```
 // 1. dist目录不存在的话就创建一个
@@ -138,7 +138,7 @@ web: resolve('src/platforms/web'),
 
 |英文|含义|说明|
 |-|-|-|
-|crutch|拐杖|不要和crotch裤裆搞混了：open crotch pants开裆裤|
+|crutch|拐杖|不要和裤裆crotch搞混了：open crotch pants开裆裤|
 |detrimental|有害的|-|
 
 > 封面图： 槐柏树街 - 2013春 - Sandii
