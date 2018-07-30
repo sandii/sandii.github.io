@@ -2,7 +2,7 @@
 layout:     post
 title:      "Vue源码学习2：构造函数"
 subtitle:   "Learning Vue Source Code 2： Constructor"
-date:       2018-07-21 12:00:00
+date:       2018-07-29 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-006.jpg"
 catalog: true
@@ -116,7 +116,7 @@ function Vue (options) {
 }
 
 // 2. 给构造函数Vue挂载静态属性/方法和实例属性/方法
-// 这也正是下一步需要去看的地方
+// 这也正是下一步需要去依次探索的地方
 // src/core/instance/index.js
 // src/core/index.js
 // src/platforms/web/runtime/index.js
