@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Vue源码学习2：构造函数"
-subtitle:   "Learning Vue Source Code 2： Constructor"
+title:      "Vue源码学习2：寻找构造函数"
+subtitle:   "Learning Vue Source Code 2： Looking For Constructor"
 date:       2018-07-29 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-006.jpg"
@@ -23,7 +23,7 @@ tags:
 1. 为Vue挂载各种静态属性和方法
 1. 为Vue实例挂载各种属性和方法
 
-上一篇文章里我们已经找到了新世界的入口`src/platforms/web/entry-runtime-with-compiler.js`，那么我们就看一下，它是怎么一步一步增加上API中的那些功能的。
+上一篇文章里我们已经找到了新世界的入口`src/platforms/web/entry-runtime-with-compiler.js`，那么我们就看一下，源码是怎样声明构造函数的，又是怎么一步一步增加上API中的那些功能的。
 
 
 ## 追根溯源
@@ -97,7 +97,7 @@ const builds = {
 - vue.min.js 生产环境 不做校验
 
 
-## 总结
+## 源码结构
 
 忽略了开发环境中的代码校验之后，代码就剩下了这么点儿了，这就是整套源码的源头：
 
