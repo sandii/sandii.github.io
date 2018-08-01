@@ -130,8 +130,12 @@ web: resolve('src/platforms/web'),
 
 所以`dist/vue.js`是由`src/platforms/web/entry-runtime-with-compiler.js`编译来的。而这个文件名的含义也证实了我们的猜测：它是精简版+编译器的入口。打开它，最后一行果然是`export default Vue`。
 
+
 ## 尾声
-终于，`src/platforms/web/entry-runtime-with-compiler.js`就是我们要找的通向新世界的大门，那么这一篇文章的任务也就完成了。探索新世界的乐趣就留给下一篇了。收工。
+
+终于，`src/platforms/web/entry-runtime-with-compiler.js`就是我们要找的通向新世界的大门，那么这一篇文章的任务也就完成了。探索新世界的乐趣就留给下一篇了。
+
+尽管我水平一般，一行一行看过去，可能很多代码细节暂时根本看不懂。但是我们可以发现这其实这并不影响我们对代码整体的理解。估计在探索新世界的过程中，跳过暂时看不懂的部分也将是常态了。
 
 
 ## 背单词
