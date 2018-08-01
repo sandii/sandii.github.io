@@ -23,7 +23,7 @@ tags:
 1. 为Vue挂载各种静态属性和方法
 1. 为Vue实例挂载各种属性和方法
 
-上一篇文章里我们已经找到了新世界的入口`src/platforms/web/entry-runtime-with-compiler.js`，那么我们就看一下，源码是怎样声明构造函数的，又是怎么一步一步增加上API中的那些功能的。
+上一篇文章里我们已经找到了新世界的入口`src/platforms/web/entry-runtime-with-compiler.js`，那么我们就看一下，源码是怎样声明构造函数的，又是怎么一步一步增上API中的那些功能的。
 
 
 ## 追根溯源
@@ -41,7 +41,7 @@ import Vue from './instance/index'
 
 // src/core/instance/index.js
 function Vue (options) {
-	// ...
+    // ...
 }
 // 终于找到了！
 ```
@@ -71,24 +71,24 @@ function Vue (options) {
 
 ```
 const builds = {
-	// 省略...
-	'web-full-dev': {
-		entry: resolve('web/entry-runtime-with-compiler.js'),
-		dest: resolve('dist/vue.js'),
-		format: 'umd',
-		env: 'development', 	// 开发环境
-		alias: { he: './entity-decoder' },
-		banner
-	},
-	'web-full-prod': {
-		entry: resolve('web/entry-runtime-with-compiler.js'),
-		dest: resolve('dist/vue.min.js'),
-		format: 'umd',
-		env: 'production',		// 生产环境
-		alias: { he: './entity-decoder' },
-		banner
-	},
-	// 省略...
+    // 省略...
+    'web-full-dev': {
+        entry: resolve('web/entry-runtime-with-compiler.js'),
+        dest: resolve('dist/vue.js'),
+        format: 'umd',
+        env: 'development',     // 开发环境
+        alias: { he: './entity-decoder' },
+        banner
+    },
+    'web-full-prod': {
+        entry: resolve('web/entry-runtime-with-compiler.js'),
+        dest: resolve('dist/vue.min.js'),
+        format: 'umd',
+        env: 'production',      // 生产环境
+        alias: { he: './entity-decoder' },
+        banner
+    },
+    // 省略...
 }
 ```
 

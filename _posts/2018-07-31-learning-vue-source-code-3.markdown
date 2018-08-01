@@ -45,9 +45,9 @@ renderMixin(Vue)
 
 ```
 export function initMixin (Vue: Class<Component>) {
-	Vue.prototype._init = function (options?: Object) {
-		// 省略...
-	}
+  Vue.prototype._init = function (options?: Object) {
+    // 省略...
+  }
 }
 ```
 
@@ -55,17 +55,17 @@ export function initMixin (Vue: Class<Component>) {
 
 ```
 function Vue (options) {
-	this._init(options);
+  this._init(options);
 }
 ```
 
 然而里面的内容我是完全看不懂的…… 分成几个部分一行一行慢慢看吧。首先是一堆零碎，没事啥好说的：
 
 ```
-const vm: Component = this	// 将实例对象缓存为变量vm
+const vm: Component = this  // 将实例对象缓存为变量vm
 
 // a uid
-vm._uid = uid++	// 给每一个实例一个独立的_uid
+vm._uid = uid++ // 给每一个实例一个独立的_uid
 
 // a flag to avoid this being observed
 // 为实例设置一个flag，防止被观察（观察？完全不知道大神你在说什么…）
@@ -122,7 +122,7 @@ export let mark
 export let measure
 
 // 如果不符合下面的这两个if的条件，上面的两个输出都为undefined
-if (process.env.NODE_ENV !== 'production') {	// 开发环境
+if (process.env.NODE_ENV !== 'production') {  // 开发环境
   
   // 声明变量perf，若下面的条件都成立，perf === window.performance
   const perf = inBrowser && window.performance 
@@ -130,14 +130,14 @@ if (process.env.NODE_ENV !== 'production') {	// 开发环境
 
   // 浏览器环境 且 window.performance的API可用
   if (
-    perf &&		// 
+    perf &&   // 
     perf.mark &&
     perf.measure &&
     perf.clearMarks &&
     perf.clearMeasures
   ) {
 
-  	// 输出的mark和measure两个函数都是用于调用window.performance的API
+    // 输出的mark和measure两个函数都是用于调用window.performance的API
     mark = tag => perf.mark(tag)
     measure = (name, startTag, endTag) => {
       perf.measure(name, startTag, endTag)

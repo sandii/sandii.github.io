@@ -31,8 +31,8 @@ tags:
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script>
 new Vue({
-	el : '#app',
-	data : { a : 'hello world' },
+    el : '#app',
+    data : { a : 'hello world' },
 });
 </script>
 </body>
@@ -76,7 +76,7 @@ vue.runtime.min.js
 而`vue.js` `vue.min.js` `vue.runtime.js` `vue.runtime.common.js`这四个都是以umd的方式输出Vue，所以我们标签引入vue.js时，会有全局变量Vue
 
 ## build构建
-那么这些文件是怎么生成的呢？像我水平这么一般的人都知道要用`npm run build`。于是我们看看`package.json`，其他的我都看不懂，就看懂了这一行：
+那么这些文件是怎么生成的呢？一般是用`npm run build`。于是我们看看`package.json`，其他的我都看不懂，就看懂了这一行：
 
 ```
 "build": "node scripts/build.js",
@@ -109,16 +109,16 @@ exports.getAllBuilds = () => Object.keys(builds).map(genConfig)
 
 ```
 const builds = {
-	// 省略...
-	'web-full-dev': {
-		entry: resolve('web/entry-runtime-with-compiler.js'),	// 把这个
-		dest: resolve('dist/vue.js'),							// 编译成这个
-		format: 'umd',											// umd输出
-		env: 'development',										// 开发模式
-		alias: { he: './entity-decoder' },
-		banner,
-	},
-	// 省略...
+    // 省略...
+    'web-full-dev': {
+        entry: resolve('web/entry-runtime-with-compiler.js'), // 输入
+        dest: resolve('dist/vue.js'),  // 输出
+        format: 'umd',                 // umd输出
+        env: 'development',            // 开发模式
+        alias: { he: './entity-decoder' },
+        banner,
+    },
+    // 省略...
 }
 ```
 

@@ -57,32 +57,55 @@ new Vue({
   data : { a : 'hello world' },
 }
 ```
-但这个`options._isComponent`我没见过，文档里也查不到，所以应该是一个内部的属性，并不对用户开放。目前实在不清楚它是干什么用的，只能先往下看。`if-else`里的`initInternalComponent` `mergeOptions` `resolveConstructorOptions`三个方法。
 
-## initInternalComponent
-
-这个
+但这个`options._isComponent`我没见过，文档里也查不到，所以应该是一个源码内部的属性，并不对用户开放。目前实在不清楚它是干什么用的，而且大概看了一眼`initInternalComponent`，基本也是看不懂，于是先跳过，看`else`分支：
 
 ```
-export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
-  const opts = vm.$options = Object.create(vm.constructor.options)
-  // doing this because it's faster than dynamic enumeration.
-  const parentVnode = options._parentVnode
-  opts.parent = options.parent
-  opts._parentVnode = parentVnode
-
-  const vnodeComponentOptions = parentVnode.componentOptions
-  opts.propsData = vnodeComponentOptions.propsData
-  opts._parentListeners = vnodeComponentOptions.listeners
-  opts._renderChildren = vnodeComponentOptions.children
-  opts._componentTag = vnodeComponentOptions.tag
-
-  if (options.render) {
-    opts.render = options.render
-    opts.staticRenderFns = options.staticRenderFns
-  }
-}
+vm.$options = mergeOptions(
+  resolveConstructorOptions(vm.constructor),
+  options || {},
+  vm
+)
 ```
+
+这句大概的意思是，用`mergeOptions`函数处理用户传入的`options`对象，把处理结果赋值给Vue实例对象的`$options`属性。这个属性是开放给用户使用的，在API中可以查到。那么我们看一下`mergeOptions`函数是怎么处理options的。
+
+
+## mergeOptions
+
+`mergeOptions`是从外部引入的
+
+```
+import { extend, mergeOptions, formatComponentName } from '../util/index'
+```
+
+打开`src/core/util/index.js`，发现是个工具大汇总，又只能靠猜了啊……
+
+```
+export * from 'shared/util'
+export * from './lang'
+export * from './env'
+export * from './options'
+export * from './debug'
+export * from './props'
+export * from './error'
+export * from './next-tick'
+export { defineReactive } from '../observer/index'
+```
+
+我猜是`options`，打开`src/core/util/options.js`，猜对了~
+但是400多行的代码，加上各种外部引入的东西，估计够我看一阵子了。
+
+```
+
+```
+
+
+
+
+## resolveConstructorOptions
+
+
 
 
 > 封面图： 槐柏树街 - 2013春 - Sandii
