@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Vue源码学习3：实例初始化"
-subtitle:   "Learning Vue Source Code 3： initiate instance"
+subtitle:   "Learning Vue Source Code 3: initiate instance"
 date:       2018-07-31 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-006.jpg"

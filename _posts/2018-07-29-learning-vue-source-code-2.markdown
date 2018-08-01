@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Vue源码学习2：寻找构造函数"
-subtitle:   "Learning Vue Source Code 2： Looking For Constructor"
+subtitle:   "Learning Vue Source Code 2: Looking For Constructor"
 date:       2018-07-29 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-006.jpg"
