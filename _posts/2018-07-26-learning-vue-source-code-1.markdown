@@ -4,7 +4,7 @@ title:      "Vue源码学习：从何下手?"
 subtitle:   "Learning Vue Source Code: Where to Start?"
 date:       2018-07-26 12:00:00
 author:     "Sandii"
-header-img: "img/banner/bg-005.jpg"
+header-img: "img/pexels/001.jpg"
 catalog: true
 tags:
     - vue
@@ -144,5 +144,3 @@ web: resolve('src/platforms/web'),
 |-|-|-|
 |crutch|拐杖|不要和裤裆crotch搞混了：open crotch pants开裆裤|
 |detrimental|有害的|-|
-
-> 封面图： 槐柏树街 - 2013春 - Sandii

@@ -4,7 +4,7 @@ title:      "Vue源码学习2：寻找构造函数"
 subtitle:   "Learning Vue Source Code 2: Looking For Constructor"
 date:       2018-07-29 12:00:00
 author:     "Sandii"
-header-img: "img/banner/bg-006.jpg"
+header-img: "img/pexels/002.jpg"
 catalog: true
 tags:
     - vue
@@ -128,6 +128,3 @@ export default Vue
 // 4. 把输出的Vue打包成各种版本放入dist目录
 // scripts/build.js
 ```
-
-
-> 封面图： 槐柏树街 - 2013春 - Sandii

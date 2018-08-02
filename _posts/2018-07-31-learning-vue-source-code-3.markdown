@@ -4,7 +4,7 @@ title:      "Vue源码学习3：实例初始化"
 subtitle:   "Learning Vue Source Code 3: initiate instance"
 date:       2018-07-31 12:00:00
 author:     "Sandii"
-header-img: "img/banner/bg-006.jpg"
+header-img: "img/pexels/003.jpg"
 catalog: true
 tags:
     - vue
@@ -211,5 +211,3 @@ if (vm.$options.el) {
 - 实例化时执行`_init方法`，而这个方法来源于`src/core/instance/init.js`
 - 初始化执行了一大堆不知道什么操作，并用window.performance监控了全程（所以很重要）
 - 初始化的最后是把组件挂载到DOM中去
-
-> 封面图： 槐柏树街 - 2013春 - Sandii

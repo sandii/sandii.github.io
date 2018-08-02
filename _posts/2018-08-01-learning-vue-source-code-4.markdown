@@ -4,7 +4,7 @@ title:      "Vue源码学习4：mergeOptions函数到底在合并什么"
 subtitle:   "Learning Vue Source Code 4: What Dose MergeOptions Function Merge"
 date:       2018-08-01 12:00:00
 author:     "Sandii"
-header-img: "img/banner/bg-006.jpg"
+header-img: "img/pexels/004.jpg"
 catalog: true
 tags:
     - vue
@@ -154,6 +154,3 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
 所以，`mergeOptions`的功能是合并 **用户传入的options** 和 **Vue.options**，作为真正实例化时的配置。
 
 具体的怎么合并又得放到下一篇了。
-
-
-> 封面图： 槐柏树街 - 2013春 - Sandii
