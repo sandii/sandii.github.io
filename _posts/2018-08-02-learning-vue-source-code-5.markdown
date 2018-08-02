@@ -10,7 +10,7 @@ tags:
     - vue
 ---
 
-终于进入mergeOptions函数的内部了。
+终于进入mergeOptions函数的内部了。一上来先校验child。
 
 ## 子组件命名的三个条件
 
