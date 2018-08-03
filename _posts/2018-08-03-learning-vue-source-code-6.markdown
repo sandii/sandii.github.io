@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Vue源码学习6：标准化options"
-subtitle:   "Learning Vue Source Code 5: normalize options"
+subtitle:   "Learning Vue Source Code 6: normalize options"
 date:       2018-08-03 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/006.jpg"
@@ -220,9 +220,7 @@ function normalizeDirectives (options: Object) {
 
 ## 背单词
 
-|英文|含义|说明|
-|-|-|-|
-|crutch|拐杖|不要和裤裆crotch搞混了：open crotch pants开裆裤|
-|detrimental|有害的|-|
-
-
+|英文|含义|
+|-|-|
+|hyphen|连字符|
+|delimit|界定 分隔|
