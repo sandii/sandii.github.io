@@ -154,3 +154,15 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
 所以，`mergeOptions`的功能是合并 **用户传入的options** 和 **Vue.options**，作为真正实例化时的配置。
 
 具体的怎么合并又得放到下一篇了。
+
+
+## 背单词
+
+|英文|类型|含义|
+|-|-|-|
+|instance|noun|实例|
+|instantiate|verb|实例化|
+|instantiation|noun|实例化|
+
+注意区分`instant`瞬间
+

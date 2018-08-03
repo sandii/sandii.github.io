@@ -156,7 +156,7 @@ export const isSVG = makeMap(
 1. 不能是vue内置标签
 1. 不能是html和svg标签
 
-Vue的运行环境可能有`web`和`veex`，源码中有许多功能是根据不同的环境添加的。
+Vue的运行环境可能有`web`和`weex`，源码中有许多功能是根据不同的环境添加的。
 
 ## makeMap函数
 
