@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习8： options.data的合并策略"
+title:      "Vue源码学习9： options.data的合并策略"
 subtitle:   "Learning Vue Source Code 8: merging strategy for options.data"
 date:       2018-08-08 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/008.jpg"
+header-img: "img/pexels/009.jpg"
 catalog: true 
 tags:
     - vue

@@ -112,7 +112,7 @@ config.optionMergeStrategies是开放给用户的API，用法很简单：`Vue.co
 2. 然后定义Vue内置属性们的合并策略
 
 ```
-// 可以分为六组
+// 可以分为7组
 
 // (1) el和propsData策略一样
 strats.el = strats.propsData = 
@@ -138,6 +138,9 @@ strats.props =
 strats.methods =
 strats.inject =
 strats.computed =
+
+// (7) provide
+strats.provide =
 ```
 
 可以看到，源码是先取`用户自定义策略`，再定义`内置策略`，这保证了内置属性合并不会被用户随意修改。
