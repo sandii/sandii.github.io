@@ -98,7 +98,7 @@ function mergeField (key) {
 
 
 
-`strat`是`strategy`的缩写。strat对象就声明在本文件`src/core/util/options`。我们看看这个对象是怎么来的：
+`strat`是`strategy`的缩写。strat对象就声明在本文件`src/core/util/options.js`。我们看看这个对象是怎么来的：
 
 1. 先从config.optionMergeStrategies中取用户自定义的合并策略
 
@@ -144,7 +144,7 @@ strats.computed =
 
 3. 最后是默认策略
 ```
-// 默认策略就是 child优先
+// 默认策略就是：child优先
 const defaultStrat = function (parentVal: any, childVal: any): any {
   return childVal === undefined
     ? parentVal
@@ -152,4 +152,17 @@ const defaultStrat = function (parentVal: any, childVal: any): any {
 }
 ```
 
-今天到此为止，一篇文章再详解Vue内置属性们的合并策略。
+下篇文章再详解Vue内置属性们的合并策略。
+
+
+## 总结
+
+到这里，整个`src/core/util/options.js`文件我们就基本上看完了，最后还有一个`export function resolveAsset`现在还不知道什么干什么用的。可以看到这个文件其实就是`mergeOptions()`函数及其内部主要的操作：
+1. 检验子组件名
+1. 标准化props inject directives
+1. 合并options
+
+合并options的具体过程也分为三步：
+1. parent = mergeOptions(parent, child.extends)
+1. parent = mergeOptions(parent, child.mixins)
+1. 逐个属性按策略合并
