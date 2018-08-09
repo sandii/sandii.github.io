@@ -253,7 +253,7 @@ provide的处理和data相关，也放到下一篇。
 
 ## 总结
 
-除了data和provide其他都看完了，初步总结下
+除了data和provide其他都看完了，初步总结一下：
 
 |key|strategy|
 |-|-|
