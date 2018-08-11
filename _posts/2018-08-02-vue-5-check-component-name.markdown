@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Vue源码学习5：检查组件名"
-subtitle:   "Learning Vue Source Code 5: check component name"
+subtitle:   "Learning Vue Source Code 5: Check Component Name"
 date:       2018-08-02 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/005.jpg"

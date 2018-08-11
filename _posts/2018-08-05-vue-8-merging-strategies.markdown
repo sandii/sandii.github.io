@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Vue源码学习8： options合并策略"
-subtitle:   "Learning Vue Source Code 8: strategies for merging options"
+subtitle:   "Learning Vue Source Code 8: Strategies for Merging Options"
 date:       2018-08-05 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/008.jpg"
