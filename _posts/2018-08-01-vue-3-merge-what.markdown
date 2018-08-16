@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习4：mergeOptions函数到底在合并什么"
-subtitle:   "Learning Vue Source Code 4: What Dose MergeOptions Function Merge"
+title:      "Vue源码学习3：mergeOptions函数到底在合并什么"
+subtitle:   "Learning Vue Source Code 3: What Dose MergeOptions Function Merge"
 date:       2018-08-01 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/004.jpg"
+header-img: "img/pexels/003.jpg"
 catalog: true
 tags:
     - vue

@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习7： 合并options的细节"
-subtitle:   "Learning Vue Source Code 7: Details of Merging Options"
+title:      "Vue源码学习6： 合并options的细节"
+subtitle:   "Learning Vue Source Code 6: Details of Merging Options"
 date:       2018-08-04 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/007.jpg"
+header-img: "img/pexels/006.jpg"
 catalog: true 
 tags:
     - vue

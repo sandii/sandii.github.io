@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习6：标准化options"
-subtitle:   "Learning Vue Source Code 6: Normalize Options"
+title:      "Vue源码学习5：标准化options"
+subtitle:   "Learning Vue Source Code 5: Normalize Options"
 date:       2018-08-03 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/006.jpg"
+header-img: "img/pexels/005.jpg"
 catalog: true
 tags:
     - vue

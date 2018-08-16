@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习5：检查组件名"
-subtitle:   "Learning Vue Source Code 5: Check Component Name"
+title:      "Vue源码学习4：检查组件名"
+subtitle:   "Learning Vue Source Code 4: Check Component Name"
 date:       2018-08-02 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/005.jpg"
+header-img: "img/pexels/004.jpg"
 catalog: true
 tags:
     - vue

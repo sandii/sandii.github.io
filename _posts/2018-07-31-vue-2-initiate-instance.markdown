@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Vue源码学习3：实例初始化"
-subtitle:   "Learning Vue Source Code 3: Initiate Instance"
+title:      "Vue源码学习2：实例初始化"
+subtitle:   "Learning Vue Source Code 2: Initiate Instance"
 date:       2018-07-31 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/003.jpg"
+header-img: "img/pexels/002.jpg"
 catalog: true
 tags:
     - vue
