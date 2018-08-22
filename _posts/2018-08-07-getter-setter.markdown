@@ -4,7 +4,7 @@ title:      "getter/setter和其他对象属性特性"
 subtitle:   "Getter/Setter and Other Object Property's Attributes"
 date:       2018-08-07 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/010.jpg"
+header-img: "img/pexels/009.jpg"
 catalog: true 
 tags:
     - vue
@@ -132,8 +132,8 @@ Object.defineProperty(o, 'c', {
 ```
 
 需要注意的是设置和修改属性特性时，其实**特性不用全都写**：
-- 新设置的话不写认为是false或undefined
-- 修改的话不写认为是不变
+- 新设置特性时：不写认为是false或undefined
+- 修改特性时：不写认为是不变
 
 
 ## 操作属性特性API

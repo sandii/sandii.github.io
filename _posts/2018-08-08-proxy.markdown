@@ -1,0 +1,117 @@
+---
+layout:     post
+title:      "Proxy和getter/setter有什么区别？"
+subtitle:   "What's the Difference between Proxy and Getter/Setter?"
+date:       2018-08-08 12:00:00
+author:     "Sandii"
+header-img: "img/pexels/010.jpg"
+catalog: true 
+tags:
+    - vue
+---
+
+上一篇复习了getter和setter，知道了它们作为对象访问的拦截器功能十分强大。这一篇我们来学习一下Proxy。同样作为对象访问拦截器，它们有什么区别呢？
+
+
+## ES5 vs. ES6
+
+首先当然是兼容性，这个没什么好说的。getter和setter属于ES5，可以安全地在IE9+上使用。Proxy虽然已经被很多现代浏览器支持了，但还是用babel编译一下比较安全。
+
+
+## 单属性拦截 vs. 全属性拦截
+
+getter/setter是针对某一特定属性的，每个属性都需要单独设置；而Proxy承包整个对象，覆盖所有属性。
+
+```
+const o = {
+    get a () { return 1; },
+};
+console.log(o.a); // 1
+console.log(o.b); // undefined 
+// 没设置的该咋样还咋样
+
+const oProxy = new Proxy({}, {
+    get (target, key, receiver) { return 1; },
+});
+console.log(oProxy.a); // 1
+console.log(oProxy.b); // 1
+// 明明目标对像就没有属性a和b啊…
+```
+
+
+## 修改目标对象 vs. 不动目标对象
+
+getter/setter直接修改了目标对象的属性；而Proxy只是为目标属性加了一层代理，只有访问这层代理时才能得到拦截的效果，而目标对象保持原样。
+
+```
+const o = { a : 1 };
+const oProxy = new Proxy(o, {
+    get (target, key, receiver) { return 2; },
+});
+console.log(oProxy.a); // 2 想要看到拦截的效果必须访问代理
+console.log(o.a);      // 1 原对象保持原样
+```
+
+
+## 读写操作拦截 vs. 全操作拦截
+
+getter/setter顾名思义，只管读和写两种操作；而Proxy各种操作都能拦截。感觉Proxy就像计划经济时期的单位，职工的生老病死老人子女全都照顾到，而getter/setter就像现在的公司除了管你上班搬砖其他都不管。（题外话：前几年北京地铁涨价，我爸说通勤费上涨这么多，单位应该会给补贴吧？我说当然不会啊……）
+
+Proxy支持拦截的操作共有13种（不去查的话哪知道对象可以有这么多种操作……），这里只列常用的几种：
+
+|函数名|参数列表|拦截的操作|示例|
+|-|-|-|-|
+|get|target, key, receiver|读|proxy.a 或 proxy['a']|
+|set|target, key, value, receiver|写|proxy.a = 1 或 proxy['a'] = 1|
+|apply|target, context, args|调用|proxy(...args) 或 proxy.call(context, ...args)|
+|construct|target, args|new|new proxy(...args)|
+|has|target, key|in运算符|key in proxy|
+|deleteProperty|target, key|delete|delete proxy[key]|
+|ownKeys|target|获取属性名|Object.keys(proxy) 或 for/in循环|
+|getOwnPropertyDescriptor|target, key|获取属性描述对象|Object.getOwnPropertyDescriptor|
+|defineProperty|target, key, propDesc|Object.defineProperty 或 Object.defineProperties|
+
+```
+const proxy = new Proxy({}, {
+	get (target, key, receiver) {
+		return 1;
+	},
+	set (target, key, value, receiver) {
+		console.log(`proxy.${key} = ${value}`);
+	},
+	has (target, key) {
+		return true;
+	},
+	// delete是关键字，所以只能叫deleteProperty了
+	deleteProperty (target, key) {
+		console.log('delete key: '+ key);
+	},
+});
+const fnProxy = new Proxy(function () {}, {
+	apply (target, context, args) {
+		console.log('called with args: ', ...args);
+	},
+	construct (target, args) {
+		console.log('new with args: ', ...args);
+		return {}; // 必须有返回值，不能偷懒，否则报错
+	},
+})
+
+console.log(proxy.a);      // 1
+proxy.b = 2;               // proxy.b = 2
+console.log('x' in proxy); // true (x属性明明不存在)
+delete proxy.x;            // delete key: x
+
+fnProxy(1, 2);      // called with args: 1 2
+new fnProxy(3, 4);  // new with args: 3 4
+```
+
+
+## this指向问题
+
+// todo
+
+
+## 
+
+
