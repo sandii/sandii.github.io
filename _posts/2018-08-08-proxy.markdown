@@ -52,6 +52,8 @@ console.log(oProxy.a); // 2 想要看到拦截的效果必须访问代理
 console.log(o.a);      // 1 原对象保持原样
 ```
 
+这个区别的一个重要表现是`this`的指向问题。getter/setter函数中的this指向是目标对象本尊；而Proxy中的this指向的是proxy对象，而非目标对象。这也正是为什么proxy拦截函数的第一个参数都是`target`，可以用来来引用目标对象。
+
 
 ## 读写操作拦截 vs. 全操作拦截
 
@@ -106,12 +108,5 @@ fnProxy(1, 2);      // called with args: 1 2
 new fnProxy(3, 4);  // new with args: 3 4
 ```
 
-
-## this指向问题
-
-// todo
-
-
-## 
 
 
