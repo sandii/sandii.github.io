@@ -108,5 +108,80 @@ fnProxy(1, 2);      // called with args: 1 2
 new fnProxy(3, 4);  // new with args: 3 4
 ```
 
+## 代码实操
+
+最后我们从[阮老师教程](http://es6.ruanyifeng.com/#docs/proxy#Proxy-%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95)里找几个例子分别用Proxy和getter/setter实现一下。
+
+1. 数组的负数索引，-n返回倒数第n个元素
+```
+// proxy实现
+const createArray = (...arr) => (new Proxy(arr, {
+	get (target, key, receiver) {
+		key = Number(key);  // key is a string
+		const index = key >= 0 ? key : arr.length + key;
+		return arr[index];
+	},
+}));
+const proxy = createArray('x','y','z');
+console.log(proxy[2]);  // z
+console.log(proxy[-1]); // z
+proxy[2] = 'haha';      // 改一下
+console.log(proxy[2]);  // haha
+console.log(proxy[-1]); // haha
+```
+
+```
+// getter/setter实现
+const createArray = (...arr) => {
+	const obj = {};  // it is actually a array-like object
+	arr.forEach((n, i) => {
+		obj[i] = n;
+		const key = String(i - arr.length);
+		Object.defineProperty(obj, key, {
+			get () { return obj[i]; },
+		});
+	});
+	return obj;
+};
+const arr = createArray('x','y','z');
+console.log(arr[2]);  // z
+console.log(arr[-1]); // z
+arr[2] = 'haha';      // 改一下
+console.log(arr[2]);  // haha
+console.log(arr[-1]); // haha
+```
+
+2. 链式调用，支持double、power、reverseInt，用get取值
+```
+// proxy实现
+const operators = {
+	double : n => n *2,
+	power  : n => n * n,
+	reverseInt : n => String(n).split('').reverse().join('') | 0,
+};
+const calculate = (stack, n) => {
+	return stack.reduce((rs, op) => {
+		const fn = operators[op];
+		return fn ? fn(rs) : rs;
+	}, n);
+};
+const pipe = n => {
+	const stack = [];
+	return (new Proxy({}, {
+		get (target, key, receiver) {
+			if (key === 'get')
+				return calculate(stack, n);
+			stack.push(key);
+			return receiver;
+		},
+	}));
+};
+pipe(3).double.power.reverseInt.get;  // 63
+```
+
+```
+// getter/setter实现
+
+```
 
 
