@@ -57,7 +57,7 @@ console.log(o.a);      // 1 原对象保持原样
 
 ## 读写操作拦截 vs. 全操作拦截
 
-getter/setter顾名思义，只管读和写两种操作；而Proxy各种操作都能拦截。感觉Proxy就像计划经济时期的单位，职工的生老病死老人子女全都照顾到，而getter/setter就像现在的公司除了管你上班搬砖其他都不管。（题外话：前几年北京地铁涨价，我爸说通勤费上涨这么多，单位应该会给补贴吧？我说当然不会啊……）
+getter/setter顾名思义，只管读和写两种操作；而Proxy各种操作都能拦截。感觉Proxy就像计划经济时期的单位，职工的生老病死老人子女全都照顾到，而getter/setter就像现在的公司除了管你上班搬砖其他都不管。
 
 Proxy支持拦截的操作共有13种（不去查的话哪知道对象可以有这么多种操作……），这里只列常用的几种：
 
@@ -115,24 +115,22 @@ new fnProxy(3, 4);  // new with args: 3 4
 1. 数组的负数索引，-n返回倒数第n个元素
 ```
 // proxy实现
-const createArray = (...arr) => (new Proxy(arr, {
+const createArray1 = (...arr) => (new Proxy(arr, {
 	get (target, key, receiver) {
 		key = Number(key);  // key is a string
 		const index = key >= 0 ? key : arr.length + key;
 		return arr[index];
 	},
 }));
-const proxy = createArray('x','y','z');
+const proxy = createArray1('x','y','z');
 console.log(proxy[2]);  // z
 console.log(proxy[-1]); // z
 proxy[2] = 'haha';      // 改一下
 console.log(proxy[2]);  // haha
 console.log(proxy[-1]); // haha
-```
 
-```
 // getter/setter实现
-const createArray = (...arr) => {
+const createArray2 = (...arr) => {
 	const obj = {};  // it is actually a array-like object
 	arr.forEach((n, i) => {
 		obj[i] = n;
@@ -143,7 +141,7 @@ const createArray = (...arr) => {
 	});
 	return obj;
 };
-const arr = createArray('x','y','z');
+const arr = createArray2('x','y','z');
 console.log(arr[2]);  // z
 console.log(arr[-1]); // z
 arr[2] = 'haha';      // 改一下
@@ -165,7 +163,7 @@ const calculate = (stack, n) => {
 		return fn ? fn(rs) : rs;
 	}, n);
 };
-const pipe = n => {
+const pipe1 = n => {
 	const stack = [];
 	return (new Proxy({}, {
 		get (target, key, receiver) {
@@ -176,12 +174,99 @@ const pipe = n => {
 		},
 	}));
 };
-pipe(3).double.power.reverseInt.get;  // 63
-```
+const rs1 = pipe1(3).double.power.reverseInt.get;
+console.log(rs1);  // 63
 
-```
 // getter/setter实现
+const pipe2 = n => {
+	const stack = [];
+	const obj = {};
+	Object.defineProperty(obj, 'get', {
+		get () { return calculate(stack, n); },
+	});
+	const getDesc = op => ({
+		get () {
+			stack.push(op);
+			return obj;
+		},
+	});
+	Object.keys(operators).forEach(op => {
+		Object.defineProperty(obj, op, getDesc(op));
+	});
+	return obj;
+};
 
+const rs2 = pipe2(3).double.power.reverseInt.get;
+console.log(rs2);  // 63
 ```
 
+虽然只用了getter的功能，但把以上代码敲完，对于两者的区别，基本可以说是比较了解了。
 
+
+## 为什么Vue用getter/setter不用Proxy
+
+早在2016年就有人在Vue的issue里提出为什么不用Prxoy来实现数据绑定呢。并列举了Proxy的几大好处：
+- 简单
+- 可以监听新添加的属性（不用使用Vue.set了）
+- 不会被原对象进行修改
+
+我们看看作者是怎么回答的：
+
+> The biggest problem with Proxy is that
+> 1. There's no way to simulate a consistent behavior in browsers that do not support it
+> 2. There's no way to maintain reference consistency for observed objects.
+> For point 2, ES6 Proxies can only create a separate "copy" of the original object, but this copy will fail in cases where you try to compare them with ===:
+
+```
+var obj = { a: 1 }
+var proxy = new Proxy(obj, handlers)
+
+obj === proxy // false
+```
+
+> This introduces more complexity when you are accessing nested properties - you will always need to be careful about whether a value you retrieved is the "real one" or just a proxy, otherwise it can lead to obscure bugs when you rely on === comparators. IMO this is even more annoying than having to use Vue.set.
+
+> It also won't make internal binding code much simpler because how to intercept the manipulations is only a small part of the reactivity system.
+
+> If Proxies can be installed directly on an object itself, then I'm all for it. But it can't, that makes it a no-go.
+
+见<https://github.com/vuejs/vue/issues/3020>
+
+**大概翻译一下：**
+
+> Proxy最大的问题是：
+
+> 1. 兼容性
+> 2. 无法保证被观察对象引用的一致性
+
+> 第二点的意思是，ES6为原对象创建了一个独立的拷贝，当时试图用`===`来比较它们的时候就会出问题。
+
+> 这还会使访问深度嵌套的属性变得很复杂————我们需要考虑这个是真实对象呢还是一个代理对象，而且`===`可能导致难以发现的bug。我觉得这比用`Vue.set`还要麻烦。
+
+> 而且，拦截对象的操作只是整个响应式系统的一小部分，所以用Proxy替代getter/setter并不会使数据绑定的代码简单太多。
+
+> 如果Proxy能够直接修改数据而非建立拷贝，我肯定就用它了。但事实并非如此，所以我就没有考虑Proxy。
+
+翻译完毕。
+
+然而，两年后<https://github.com/vuejs/roadmap#2x-next>又提出
+
+> Reactivity system will be rewritten with Proxies with various improvements
+
+看来开发团队已经设法解决了`访问深度嵌套的属性`的问题了。可以期待一下。
+
+
+## 背单词
+
+|英文|翻译|
+|-|-|
+|consistent/consistency|一致|
+|IMO|in my opinion 我认为|
+
+
+## 参考
+
+- <http://es6.ruanyifeng.com/#docs/proxy#Proxy-%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95> 阮一峰
+- <https://juejin.im/post/5acd0c8a6fb9a028da7cdfaf> 寻找海蓝96
+- <https://github.com/vuejs/vue/issues/3020> Morgul & yyx
+- <https://github.com/vuejs/roadmap#2x-next> yyx
