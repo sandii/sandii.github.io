@@ -108,11 +108,13 @@ fnProxy(1, 2);      // called with args: 1 2
 new fnProxy(3, 4);  // new with args: 3 4
 ```
 
+
 ## 代码实操
 
 最后我们从[阮老师教程](http://es6.ruanyifeng.com/#docs/proxy#Proxy-%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95)里找几个例子分别用Proxy和getter/setter实现一下。
 
 1. 数组的负数索引，-n返回倒数第n个元素
+
 ```
 // proxy实现
 const createArray1 = (...arr) => (new Proxy(arr, {
@@ -150,6 +152,7 @@ console.log(arr[-1]); // haha
 ```
 
 2. 链式调用，支持double、power、reverseInt，用get取值
+
 ```
 // proxy实现
 const operators = {
@@ -203,6 +206,42 @@ console.log(rs2);  // 63
 虽然只用了getter的功能，但把以上代码敲完，对于两者的区别，基本可以说是比较了解了。
 
 
+## Reflect
+
+说到Proxy就不得不说Reflect。Reflect主要作用是：
+1. 接手Object上的某些方法。比如`defineProperty()`。
+1. 接手某些命令式操作。比如`delete`和`in`。
+1. 配合Proxy，为对象操作提供默认行为。因此`Reflect`上的方法和`Proxy`完全一致。
+
+```
+// 1. 
+Object.defineProperty(obj, key, desc);
+Reflect.defineProperty(obj, key, desc);
+
+// 2.
+delete obj[key];
+key in obj;
+Reflect.deleteProperty(obj, key);
+Reflect.has(obj, key);
+
+// 3.
+const obj = {};
+const proxy = new Proxy(obj, {
+	get (target, name, receiver) {
+		if (name === 'lol') return 'haha';
+		return Reflect.get(...arguments);
+	},
+	set (target, name, value, receiver) {
+		if (name === 'lol') {
+			console.log('lol is readonly');
+		}
+		Reflect.set(...arguments);
+	},
+});
+// 只拦截lol属性的读写，其他不变
+```
+
+
 ## 为什么Vue用getter/setter不用Proxy
 
 早在2016年就有人在Vue的issue里提出为什么不用Prxoy来实现数据绑定呢。并列举了Proxy的几大好处：
@@ -253,7 +292,7 @@ obj === proxy // false
 
 > Reactivity system will be rewritten with Proxies with various improvements
 
-看来开发团队已经设法解决了`访问深度嵌套的属性`的问题了。可以期待一下。
+看来开发团队已经设法解决了`访问深度嵌套的属性`的问题。可以期待一下。
 
 
 ## 背单词
