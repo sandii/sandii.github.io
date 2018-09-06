@@ -2,9 +2,9 @@
 layout:     post
 title:      "Proxy和getter/setter有什么区别？"
 subtitle:   "What's the Difference between Proxy and Getter/Setter?"
-date:       2018-08-08 12:00:00
+date:       2018-08-23 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/010.jpg"
+header-img: "img/pexels/006.jpg"
 catalog: true 
 tags:
     - vue

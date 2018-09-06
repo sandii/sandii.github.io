@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "getter/setter和其他对象属性特性"
-subtitle:   "Getter/Setter and Other Object Property's Attributes"
-date:       2018-08-07 12:00:00
+title:      "复习getter/setter"
+subtitle:   "Getter/Setter Review"
+date:       2018-08-16 12:00:00
 author:     "Sandii"
-header-img: "img/pexels/009.jpg"
+header-img: "img/pexels/005.jpg"
 catalog: true 
 tags:
     - vue

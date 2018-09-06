@@ -54,6 +54,7 @@ new Vue({
 1. 为Vue实例挂载各种属性和方法
 
 那么我们就看看`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
+
 ```
 README.md
 vue.common.js
@@ -66,6 +67,7 @@ vue.runtime.esm.js
 vue.runtime.js
 vue.runtime.min.js
 ```
+
 都是些什么鬼？我水平这么一般，又要晕了……还好作者大神在这里贴心地为大家准备了一个`README.md`，包含一个表格和一堆说明
 
 | | UMD | CommonJS | ES Module |
@@ -87,11 +89,12 @@ vue.runtime.min.js
 而`vue.js` `vue.min.js` `vue.runtime.js` `vue.runtime.common.js`这四个都是以umd的方式输出Vue，所以我们标签引入vue.js时，会有全局变量Vue
 
 ## build构建
-那么这些文件是怎么生成的呢？一般是用`npm run build`。于是我们看看`package.json`，其他的我都看不懂，就看懂了这一行：
+那么这些文件是怎么生成的呢？一般是用`npm run build`。于是我们打开`package.json`，看这一行：
 
 ```
 "build": "node scripts/build.js",
 ```
+
 `npm run build`命令就是执行`scripts/build.js`这个脚本嘛，毫不犹豫打开它。整个脚本其实就干了两件事：
 
 ```
