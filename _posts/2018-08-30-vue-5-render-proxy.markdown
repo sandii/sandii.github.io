@@ -16,9 +16,9 @@ tags:
 
 ```
 if (process.env.NODE_ENV !== 'production') {
-  initProxy(vm)
+    initProxy(vm)
 } else {
-  vm._renderProxy = vm
+    vm._renderProxy = vm
 }
 ```
 
@@ -49,7 +49,6 @@ if (hasProxy) {
 vm._renderProxy = process.env.NODE_ENV !== 'production' && hasProxy 
     ? new Proxy(vm, handlers) 
     : vm;
-
 ```
 
 那么hasProxy的意思也很简单，就是当前环境是否支持原生Proxy接口：

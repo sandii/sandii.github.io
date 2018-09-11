@@ -145,9 +145,11 @@ strats.provide =
 
 可以看到，源码是先取`用户自定义策略`，再定义`内置策略`，这保证了内置属性合并不会被用户随意修改。
 
+
 3. 最后是默认策略
+
 ```
-// 默认策略就是：child优先
+// 默认策略就是：child覆盖parent
 const defaultStrat = function (parentVal: any, childVal: any): any {
   return childVal === undefined
     ? parentVal
@@ -155,9 +157,39 @@ const defaultStrat = function (parentVal: any, childVal: any): any {
 }
 ```
 
+
+## el propsData
+
+很简单，el和propsData采用`默认策略`，child覆盖parent。
+
+```
+if (process.env.NODE_ENV !== 'production') {
+  strats.el = strats.propsData = function (parent, child, vm, key) {
+    if (!vm) {
+      warn(
+        `option "${key}" can only be used during instance ` +
+        'creation with the `new` keyword.'
+      )
+    }
+    return defaultStrat(parent, child)
+  }
+}
+```
+
+
+接下来出现了一个重点。开发环境中会进行一项检验，若`vm`参数为空发出警告：
+
+> option ${key} key can only be used during instance creation with the new keyword
+> 翻译：该属性只能用在用new创建出的实例中
+
+确实如此，文档中已经告诉我们`el`和`propsData`属性只能用在根组件里，子组件是不能用的。这里就是校验这个的。
+
+从判断条件`if (!vm)`可以推测出，**源码通过参数`vm`是否存在来判断当前实例是否根是组件**。在`Vue.prototype._init()`中调用`mergeOptions()`确实传入了当前实例对象`vm`。但我们目前还没见过未传入vm的情况，但可以推测出子组件实例化时调用`mergeOptions()`是不传`vm`的。这个等到以后碰到的时候再做验证。
+
+
 ## data（重点）
 
-一上来先说最重要的data合并策略。
+data的合并策略是最重要的，也是最复杂的，看完它需要有点耐心。
 
 ```
 strats.data = function (
@@ -181,7 +213,7 @@ strats.data = function (
 }
 ```
 
-首先校验非根组件data必须是函数，否则忽略child直接用parent，开发环境会警告。然后使用`mergeDataOrFn()`函数合并data：
+首先校验**非根组件data必须是函数**，否则忽略child直接用parent，开发环境会警告。然后使用`mergeDataOrFn()`函数合并data：
 
 ```
 export function mergeDataOrFn (
@@ -262,7 +294,7 @@ return function mergedInstanceDataFn () {
 }
 ```
 
-和非根组件基本一样，也是返回函数，只是现在有vm了，可以用vm代替this了。
+和非根组件基本一样，返回函数，只是现在有vm了，可以用vm代替this了。
 
 再看看`mergeData`函数，别忘了它是被延迟执行的：
 
@@ -277,48 +309,22 @@ function mergeData (to: Object, from: ?Object): Object {
     fromVal = from[key]
     if (!hasOwn(to, key)) {
       set(to, key, fromVal)  // parent补充child
-    } else if (isPlainObject(toVal) && isPlainObject(fromVal)) { // 双方都是对象，递归合并
-      mergeData(toVal, fromVal)
+    } else if (isPlainObject(toVal) && isPlainObject(fromVal)) {
+      mergeData(toVal, fromVal)  // 双方都是对象，递归合并
     }
   }
   return to // 修改child对象
 }
 ```
 
-这才是真正合并data对象的地方，有三个特点：
+这才是真正合并data对象的地方，有几个特点：
+1. to === child / from === parent
 1. **parent补充child**
 1. 双方都是对象，递归合并
 1. 合并会修改child对象
 
 其中的工具函数set，它来自`src/core/observer/index.js`，一看这个地址就知道水深了，应该是牵涉到Vue的响应式原理，这里就先跳过了。
 
-
-## el propsData
-
-```
-if (process.env.NODE_ENV !== 'production') {
-  strats.el = strats.propsData = function (parent, child, vm, key) {
-    if (!vm) {
-      warn(
-        `option "${key}" can only be used during instance ` +
-        'creation with the `new` keyword.'
-      )
-    }
-    return defaultStrat(parent, child)
-  }
-}
-```
-
-很简单，el和propsData采用`默认策略`。
-
-但开发环境中会进行一项检验，若`vm`参数为空发出警告：
-
-> option ${key} key can only be used during instance creation with the new keyword
-> 翻译：该属性只能用在用new创建出的实例中
-
-确实如此，文档中已经告诉我们`el`和`propsData`属性只能用在根组件里，子组件是不能用的。这里就是校验这个的。
-
-从判断条件`if (!vm)`可以推测出，**源码通过参数`vm`是否存在来判断当前实例是否根是组件**。在`Vue.prototype._init()`中调用`mergeOptions()`确实传入了当前实例对象`vm`。但我们目前还没见过未传入vm的情况，但可以推测出子组件实例化时调用`mergeOptions()`是不传`vm`的。这个等到以后碰到的时候再做验证。
 
 
 ## 生命周期钩子
@@ -364,11 +370,11 @@ function mergeHook (
 逻辑比较简单，翻译一下这个厉害的三元运算符三连击：
 
 ```
-// 若parent不存在，返回child，要保证是数组
-if (!parent) return (Array.isArray(child)) ? child : [child];
-
 // 若child不存在，返回parent，parent只要存在就肯定是数组
 if (!child) return parent;
+
+// 若parent不存在，返回child，要保证是数组
+if (!parent) return (Array.isArray(child)) ? child : [child];
 
 // parent和child都存在，连接起来
 return parent.concat(child);
@@ -376,7 +382,7 @@ return parent.concat(child);
 
 简而言之逻辑是 `[...parent, ...child]` ，所以我们可以知道：
 1. 生命周期钩子本身可以写为数组
-1. mixin中的声明周期钩子会先执行
+1. mixin中的生命周期钩子会先执行
 
 
 ## 资源 components directives filters
@@ -519,13 +525,16 @@ provide的处理和data一样。
 合并options的具体过程也分为三步：
 1. parent = mergeOptions(parent, child.extends)
 1. parent = mergeOptions(parent, child.mixins)
-1. 逐个属性按策略合并
+1. vm.$options = mergeOptions(parent, child)
 
-合并策略分别有：//todo
+具体合并再用for/in读取parent和child的key，并按照一定策略进行合并：
+
 |key|strategy|
 |-|-|
-|el propsData||
-|生命周期钩子||
-|资源 components directives filters||
-|watch||
-|其他 props methods inject computed||
+|el propsData|child代替parent，校验只能用于根组件|
+|data|返回函数，parent补充child|
+|生命周期钩子|合并为数组，先parent后child|
+|资源 components directives filters|parent挂在原型链上，浅拷贝child|
+|watch|parent挂在原型链上，浅拷贝child，每个key合并为数组|
+|剩余的props methods inject computed|parent补充child|
+|默认|child代替parent|
