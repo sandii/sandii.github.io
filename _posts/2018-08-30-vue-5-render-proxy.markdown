@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Vue源码学习10： renderProxy"
+title:      "Vue源码学习5： renderProxy"
 subtitle:   "Learning Vue Source Code 10: renderProxy"
 date:       2018-08-30 12:00:00
 author:     "Sandii"
