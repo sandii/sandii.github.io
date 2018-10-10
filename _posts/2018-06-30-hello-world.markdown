@@ -11,7 +11,7 @@ tags:
 ---
 
 - I've seen things you people wouldn't believe
-- attack ship on fire off the shoulder off Orion
+- attack ships on fire off the shoulder of Orion
 - I watched C-beams glitter in the darkness near the Tanhauser Gate
 - All those moments will be lost in time
 - Like tears in rain..

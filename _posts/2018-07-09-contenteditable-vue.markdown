@@ -60,13 +60,13 @@ tags:
 ```
 
 - 按下葫芦起了瓢，`value`的问题解决了，但每输入一个字符，光标都会跳回到最开始
-- 这是因为`model-view`时，给`innerHTML`重新赋值会触发元素重新渲染
-- 所以该问题转换为 **如何阻止输入时重新渲染**
+- 这是因为数据流`model-view`流动时，给`innerHTML`重新赋值会触发元素重新渲染
+- 所以接下来的问题是 **如何阻止输入时重新渲染**
 - demo: <https://jsfiddle.net/sandii/k4v2w65t/35/>
 
 ## 方案1：自定义指令
-1. 增加一个标志位表示是否正在输入，这里放在元素的`dataset`上
-1. 用一个自定义指令代替`v-html`执行`model-view`，判断如果是输入中，则不执行`model-view`
+1. 增加一个标志位表示是否正在输入，这里放在元素的`dataset`上，因为自定义指令函数中取不到实例对象vm，数据读写通常通过`dataset`进行
+1. 用一个自定义指令代替`v-html`，判断如果是输入中，则暂时掐断`model-view`数据流，阻止重新渲染
 1. 用`focus / blur`事件切换是否正在输入
 
 ```
@@ -92,7 +92,7 @@ directives : {
 
 ## 方案2：watch
 1. 整体思路不变，但把`model-view`以及相关判断从自定义指令改在了`watch`上
-1. 好处是避免把标志位放在元素的`dataset`上
+1. 好处是避免使用自定义指令，从而避免把标志位放在元素的`dataset`上
 
 ```
 <div 
@@ -109,7 +109,7 @@ data : vm => ({
 }),
 watch : {
     a (v) {
-        if (inputting) return;
+        if (this.inputting) return;
         this.viewA = v;
     },
 },
