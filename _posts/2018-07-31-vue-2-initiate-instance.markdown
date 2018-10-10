@@ -59,7 +59,7 @@ function Vue (options) {
 }
 ```
 
-然而里面的内容有点深奥……分成几个部分一行一行慢慢看吧。首先是一堆零碎，没事啥好说的：
+然而里面的内容有点深奥……分成几个部分一行一行慢慢看吧。首先是一堆零碎，没啥好说的：
 
 ```
 const vm: Component = this  // 将实例对象缓存为变量vm
@@ -98,14 +98,14 @@ if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
 }
 ```
 
-两个if的判断是一模一样的，说明这两段代码执行的有条件的：
+两个if的判断一模一样，这两段代码执行的条件是：
 1. 开发环境
 1. config.performance
 1. mark
 
 开发环境没毛病，`config.performance`也简单，[文档](https://cn.vuejs.org/v2/api/#performance)说：
 
-> 设置为 true 以在浏览器开发工具的性能/时间线面板中启用对组件初始化、编译、渲染和打补丁的性能追踪。只适用于开发模式和支持 performance.mark API 的浏览器上。
+> 设置为 true 可以在浏览器开发工具的性能/时间线面板中启用对组件初始化、编译、渲染和打补丁的性能追踪。只适用于开发模式和支持 performance.mark API 的浏览器上。
 
 原来是为了追踪组件性能的，也就是chrome后台里的performance页签：
 ![](img/content/2018-07-13-01.jpg)

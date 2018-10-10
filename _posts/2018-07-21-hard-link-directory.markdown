@@ -59,7 +59,7 @@ ls: test: No such file or directory
 14445892 -rw-r--r--  1 danny  staff  0 Oct 13 17:59 test3
 ```
 
-参数`-i`用于显示文件的inode号。我们可以看到test和test2的inode号相同，而test3不用。
+参数`-i`用于显示文件的inode号。我们可以看到test和test2的inode号相同，而test3不同。
 
 好了，如果我们为目录创建一个硬链接，那么位于文件系统中不同位置的两个目录就会指向同一内容。我们可以让子目录指向祖父目录，从而产生一个循环。
 

@@ -38,7 +38,7 @@ if (options && options._isComponent) {
 > 且所有内部组件的options都不需要特殊处理
 > （意思就是所有组件的options都可以统一处理）
 
-虽然每个词都能看懂，但还是不明白是什么意思，汗。上一篇文章说过，每一句可能都得写一篇文章，我觉得我的预感是很准的。
+虽然每个词都能看懂，但还是不明白是什么意思，汗。
 
 
 ## options是什么
@@ -96,7 +96,7 @@ export * from './next-tick'
 export { defineReactive } from '../observer/index'
 ```
 
-我猜是`options`，打开`src/core/util/options.js`，猜对了~
+既然是用于处理`options`的代码，那么打开`src/core/util/options.js`，猜对了~
 但是400多行的代码，加上各种外部引入的东西，估计够我看一阵子了。
 
 直奔主题，`mergeOptions`函数的大致结构是这样的：
@@ -187,12 +187,6 @@ export function validateComponentName (name: string) {
     )
   }
 }
-
-// isBuiltInTag方法在src/shared/util.js
-export const isBuiltInTag = makeMap('slot,component', true)
-
-// config.isReservedTag
-config.isReservedTag
 ```
 
 我们知道components中的key就是在template中所使用的自定义标签，检验自定义标签的命名规范是很有必要的。以上代码逻辑比较简单：开发环境时检查子组件命名是否符合规范，不符合规范发出警告。组件命名规范有3条：
@@ -552,4 +546,3 @@ function normalizeDirectives (options: Object) {
 |instantiation|noun|实例化|
 
 注意区分`instant`瞬间
-
