@@ -35,7 +35,7 @@ tags:
 
 ## 安装
 - 确保有nodejs，然后 `npm i -g sinopia`
-- 安装后看一下sinopia的目录下的内容
+- 安装后看一下sinopia目录下的内容
 
 |内容|说明|
 |-|-|

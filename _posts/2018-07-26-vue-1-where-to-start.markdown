@@ -43,16 +43,6 @@ new Vue({
 
 ## dist/vue.js
 
-看过教程和文档我们知道，Vue提供的API主要分布于：
-1. new Vue()的时候传入各种配置项
-1. 调用Vue的静态属性和方法
-1. 调用Vue的实例属性和方法
-
-那么我们就可以认为，整套源码主要干了这么的几件事：
-1. 声明了一个构造函数Vue
-1. 为Vue挂载各种静态属性和方法
-1. 为Vue实例挂载各种属性和方法
-
 那么我们就看看`vue.js`是怎么把`Vue`输出为一个全局变量的呢。刚才引入的vue.js位于项目的[dist目录](https://github.com/vuejs/vue/tree/dev/dist)，目录中有好多文件：
 
 ```
@@ -86,7 +76,7 @@ vue.runtime.min.js
 |esm|以es module方式输出Vue|
 |min|生产环境用的压缩版，比开发版省略了很多校验|
 
-而`vue.js` `vue.min.js` `vue.runtime.js` `vue.runtime.common.js`这四个都是以umd的方式输出Vue，所以我们标签引入vue.js时，会有全局变量Vue
+而`vue.js` `vue.min.js` `vue.runtime.js` `vue.runtime.common.js`这四个都是以umd的方式输出Vue，所以我们直接用标签引入vue.js时，会有全局变量Vue
 
 ## build构建
 那么这些文件是怎么生成的呢？一般是用`npm run build`。于是我们打开`package.json`，看这一行：
@@ -250,7 +240,7 @@ export default Vue
 
 ## 尾声
 
-尽管我水平一般，一行一行看过去，可能很多代码细节暂时根本看不懂。但是我们可以发现这其实这并不影响我们对代码整体的理解。估计在探索新世界的过程中，跳过暂时看不懂的部分也将是常态。
+尽管我水平一般，一行一行看过去，可能很多代码细节暂时根本看不懂。但是我们可以发现这其实这并不影响我们对代码整体的理解。
 
 
 ## 背单词
