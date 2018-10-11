@@ -18,9 +18,9 @@ tags:
 <input type="text" v-model="a" />
 // 等价于：
 <input 
-	type="text"
-	:value="a" 
-	@input="a = $event.target.value" />
+    type="text"
+    :value="a" 
+    @input="a = $event.target.value" />
 ```
 
 |数据流|实现|
@@ -72,15 +72,15 @@ tags:
 ```
 <div 
     contenteditable 
-    v-test="a"		    // 使用自定义指令实现 model-to-view
-    data-inputting="0"	// 锁放在元素的dataset上
+    v-test="a"          // 使用自定义指令实现 model-to-view
+    data-inputting="0"  // 锁放在元素的dataset上
     @blur="$event.target.dataset.inputting = '0'"// 失焦解锁
     @focus="$event.target.dataset.inputting = '1'"// 聚焦加锁
-    @input="a = $event.target.innerHTML"></div>	// v-m 不变
+    @input="a = $event.target.innerHTML"></div> // v-m 不变
 
 // 自定义指令
 directives : {
-  	test (el, { value }) {
+    test (el, { value }) {
         // 正在输入 不执行m-v
         if (el.dataset.inputting === '1') return;
         el.innerHTML = value;
