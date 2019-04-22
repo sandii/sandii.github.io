@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      "为什么Unix/Linux不允许硬链接指向目录 【翻译】"
+title:      "为什么 UNIX/Linux 不允许目录硬链 【翻译】"
 subtitle:   "Why Are Hard Links to Directories Not Allowed in UNIX/Linux?"
-date:       2018-07-21 12:00:00
+date:       2018-10-30 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-004.jpg"
 catalog: true

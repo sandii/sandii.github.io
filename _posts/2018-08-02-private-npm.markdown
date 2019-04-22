@@ -2,7 +2,7 @@
 layout:     post
 title:      "用sinopia搭建私有npm"
 subtitle:   "Build Private NPM with Sinopia"
-date:       2018-07-19 12:00:00
+date:       2018-08-02 12:00:00
 author:     "Sandii"
 header-img: "img/banner/bg-003.jpg"
 catalog: true

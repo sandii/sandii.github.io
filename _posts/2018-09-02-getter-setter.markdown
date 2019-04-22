@@ -2,7 +2,7 @@
 layout:     post
 title:      "复习getter/setter"
 subtitle:   "Getter/Setter Review"
-date:       2018-08-16 12:00:00
+date:       2018-09-02 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/005.jpg"
 catalog: true 

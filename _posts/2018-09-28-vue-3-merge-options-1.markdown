@@ -2,7 +2,7 @@
 layout:     post
 title:      "Vue源码学习3：详解mergeOptions函数（上）"
 subtitle:   "Learning Vue Source Code 3: MergeOptions Function Insight 1"
-date:       2018-08-05 12:00:00
+date:       2018-09-15 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/003.jpg"
 catalog: true

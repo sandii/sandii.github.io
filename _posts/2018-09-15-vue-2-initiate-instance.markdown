@@ -2,7 +2,7 @@
 layout:     post
 title:      "Vue源码学习2：实例初始化"
 subtitle:   "Learning Vue Source Code 2: Initiate Instance"
-date:       2018-07-31 12:00:00
+date:       2018-09-15 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/002.jpg"
 catalog: true

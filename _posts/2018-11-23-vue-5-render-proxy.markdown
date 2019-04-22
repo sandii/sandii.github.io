@@ -2,7 +2,7 @@
 layout:     post
 title:      "Vue源码学习5： renderProxy"
 subtitle:   "Learning Vue Source Code 10: renderProxy"
-date:       2018-08-30 12:00:00
+date:       2018-11-23 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/007.jpg"
 catalog: true 

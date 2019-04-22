@@ -2,14 +2,13 @@
 layout:     post
 title:      "Vue源码学习6： 其他初始化"
 subtitle:   "Learning Vue Source Code 10: other initiations"
-date:       2018-09-06 12:00:00
+date:       2018-12-12 12:00:00
 author:     "Sandii"
 header-img: "img/pexels/008.jpg"
 catalog: true 
 tags:
     - vue
 ---
-
 ## 
 
 继续看`Vue.protottype.init()`函数：
