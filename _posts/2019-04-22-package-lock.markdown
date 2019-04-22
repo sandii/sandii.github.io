@@ -44,12 +44,26 @@ tags:
 
 ## 回答
 
-`package-lock.json`记录了项目依赖树中所有依赖包的具体版本。而`package.json`中常常使用通配符来描述依赖包的版本（比如1.0.*）。这可以保证开发团队中所有开发者以及项目发布的生产环境代码所使用的依赖包版本完全一致。
+`package-lock.json`记录了项目依赖树中所有依赖包的具体版本。而`package.json`中常常使用通配符来描述依赖包的版本（比如1.0.*）。这可以保证团队中所有开发者以及项目发布的生产环境代码所使用的依赖包版本完全一致。而且若`package.json`发生了变化，`package-lock.json`中的依赖树也会进行相应的更新。
 
 
-It stores an exact, versioned dependency tree rather than using starred versioning like package.json itself (e.g. 1.0.*). This means you can guarantee the dependencies for other developers or prod releases, etc. It also has a mechanism to lock the tree but generally will regenerate if package.json changes.
+## 追问
 
-From the npm github pages:
+若只是为了记录确保依赖包的精确版本，为何不在`package.json`中就精确指定，而非要使用一个`package-lock.json`文件呢？
+
+
+## 回答追问
+
+因为`package.json`只包含了直接依赖，不包括依赖的依赖（嵌套依赖）。这意味着`package.json`不能控制嵌套依赖包的版本。就算你把这些嵌套依赖直接写进`package.json`的`depencies`字段也不行，因为项目中的直接依赖包会在它们的`package.json`中定义嵌套依赖的版本。
+
+所以目前针对这个问题的解决方案就是增加一个专门的文件，锁定项目完整的依赖树版本。这样我们既可以保证整个开发团队和发布的生产环境代码的依赖树的一致性，也可以通过调整`package.json`来测试不同的依赖包版本。
+
+注意，之前的`shrinkwrap.json`和现在`package-lock.json`的功能是一样的，改名后它的功能更清楚了。如果项目中已经有`shrinkwrap.json`文件，那么npm会优先读取它。
+
+
+## 官方文档
+
+回答者同时还引用了npm官方文档对`package-lock.json`的说明：
 
 package-lock.json is automatically generated for any operations where npm modifies either the node_modules tree, or package.json. It describes the exact tree that was generated, such that subsequent installs are able to generate identical trees, regardless of intermediate dependency updates.
 
@@ -61,21 +75,7 @@ Provide a facility for users to "time-travel" to previous states of node_modules
 
 To facilitate greater visibility of tree changes through readable source control diffs.
 
-And optimize the installation process by allowing npm to skip repeated metadata resolutions for previously-installed packages."
-
-## 追问
-
-If having an exact version of dependencies is so sought after, why not enforce specifying the exact version in package.json and forgoe a package-lock.json file?
-
-## 回答追问
-
-To answer jrahhali's question below about just using the package.json with exact version numbers. Bear in mind that your package.json contains only your direct dependencies, not the dependencies of your dependencies (sometimes called nested dependencies). This means with the standard package.json you can't control the versions of those nested dependencies, referencing them directly or as peer dependencies won't help as you also don't control the version tolerance that your direct dependencies define for these nested dependencies.
-
-Even if you lock down the versions of your direct dependencies you cannot 100% guarantee that your full dependency tree will be identical every time. Secondly you might want to allow non-breaking changes (based on semantic versioning) of your direct dependencies which gives you even less control of nested dependencies plus you again can't guarantee that your direct dependencies won't at some point break semantic versioning rules themselves.
-
-The solution to all this is the lock file which as described above locks in the versions of the full dependency tree. This allows you to guarantee your dependency tree for other developers or for releases whilst still allowing testing of new dependency versions (direct or indirect) using your standard package.json.
-
-NB. The previous shrink wrap json did pretty much the same thing but the lock file renames it so that it's function is clearer. If there's already a shrink wrap file in the project then this will be used instead of any lock file.
+And optimize the installation process by allowing npm to skip repeated metadata resolutions for previously-installed packages.
 
 ## 总结
 
@@ -84,10 +84,10 @@ NB. The previous shrink wrap json did pretty much the same thing but the lock fi
 
 |英文|翻译|
 |-|-|-|
-|||
-|||
-|||
-|||
+|e.g.||
+|etc||
+|NB||
+
 
 ## 原文
 <https://stackoverflow.com/questions/44297803/package-lock-json-role>
