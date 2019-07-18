@@ -1,0 +1,19 @@
+---
+layout:     post
+title:      "nonce & csp"
+subtitle:   "nonce & csp"
+date:       2019-05-16 12:00:00
+author:     "Sandii"
+header-img: "img/pexels/010.jpg"
+catalog: true 
+tags:
+  - nonce
+  - csp
+  - security
+---
+
+## 参考
+- <https://webpack.js.org/guides/csp/>
+- <https://ai.google/research/pubs/pub45542>
+- <https://www.troyhunt.com/locking-down-your-website-scripts-with-csp-hashes-nonces-and-report-uri/>
+- <https://developers.google.com/web/fundamentals/security/csp/#if_you_absolutely_must_use_it>
