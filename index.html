@@ -9,26 +9,41 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
         }
         h1 {
-            color: #333;
+            color: #8A2BE2;
             text-align: center;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
         }
         .content {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
         }
         #input-text {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
+            background-color: #363636;
+            border: 1px solid #4a4a4a;
+            color: #e0e0e0;
+            border-radius: 4px;
+            resize: vertical;
         }
         #output-text {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
-            background-color: #f0f0f0;
+            background-color: #363636;
+            border: 1px solid #4a4a4a;
+            color: #8A2BE2;
+            border-radius: 4px;
+            outline: none;
         }
         .button-group {
             margin: 10px 0;
@@ -37,13 +52,28 @@
             padding: 8px 15px;
             margin-right: 10px;
             cursor: pointer;
+            background-color: #404040;
+            color: #e0e0e0;
+            border: 1px solid #505050;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #505050;
+            border-color: #606060;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        ::placeholder {
+            color: #808080;
         }
     </style>
 </head>
 <body>
     <div class="content">
         <h1>15+24</h1>
-        <textarea id="input-text" rows="4" placeholder="请输入要转换的文本"></textarea>
+        <textarea id="input-text" rows="4" placeholder="Please input"></textarea>
         <div class="button-group">
             <button onclick="convertText(3)">Encode</button>
             <button onclick="convertText(-3)">Decode</button>
