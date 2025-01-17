@@ -1,1 +1,87 @@
-hello world
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15+24</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #input-text {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #output-text {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f0f0f0;
+        }
+        .button-group {
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>15+24</h1>
+        <textarea id="input-text" rows="4" placeholder="请输入要转换的文本"></textarea>
+        <div class="button-group">
+            <button onclick="convertText(3)">Encode</button>
+            <button onclick="convertText(-3)">Decode</button>
+        </div>
+        <div id="output-text"></div>
+    </div>
+
+    <script>
+        function convertText(shift) {
+            const input = document.getElementById('input-text').value;
+            const output = input.split('').map(char => {
+                if (/[a-zA-Z]/.test(char)) {
+                    const code = char.charCodeAt(0);
+                    const isUpperCase = char === char.toUpperCase();
+                    let newCode = code + shift;
+                    
+                    // 处理字母循环
+                    if (isUpperCase) {
+                        if (newCode > 90) {
+                            newCode = 65 + (newCode - 91);
+                        } else if (newCode < 65) {
+                            newCode = 90 - (65 - newCode - 1);
+                        }
+                    } else {
+                        if (newCode > 122) {
+                            newCode = 97 + (newCode - 123);
+                        } else if (newCode < 97) {
+                            newCode = 122 - (97 - newCode - 1);
+                        }
+                    }
+                    
+                    return String.fromCharCode(newCode);
+                }
+                return char;
+            }).join('');
+            
+            document.getElementById('output-text').textContent = output;
+        }
+    </script>
+</body>
+</html>
