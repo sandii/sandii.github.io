@@ -8,65 +8,129 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
+            padding: 10px;
+            background-color: #111827;
+            color: #e5e7eb;
+            min-height: 100vh;
         }
         h1 {
-            color: #8A2BE2;
+            color: #9ca3af;
             text-align: center;
-            text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+            text-shadow: none;
+            font-size: 1.8rem;
+            margin: 15px 0;
         }
         .content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #2d2d2d;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            padding: 15px;
+            background-color: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: calc(100% - 20px);
+            box-sizing: border-box;
         }
         #input-text {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #363636;
-            border: 1px solid #4a4a4a;
-            color: #e0e0e0;
-            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: #e5e7eb;
+            border-radius: 8px;
             resize: vertical;
+            outline: none;
+            font-size: 16px;
+            box-sizing: border-box;
+            min-height: 100px;
+        }
+        #input-text:focus {
+            border-color: #6b7280;
+            box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
         }
         #output-text {
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #363636;
-            border: 1px solid #4a4a4a;
-            color: #8A2BE2;
-            border-radius: 4px;
+            min-height: 60px;
+            padding: 12px;
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: #93c5fd;
+            border-radius: 8px;
             outline: none;
+            box-sizing: border-box;
+            font-size: 16px;
+            word-break: break-all;
         }
         .button-group {
-            margin: 10px 0;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         button {
-            padding: 8px 15px;
-            margin-right: 10px;
+            width: 100%;
+            padding: 12px 20px;
             cursor: pointer;
-            background-color: #404040;
-            color: #e0e0e0;
-            border: 1px solid #505050;
-            border-radius: 4px;
+            background-color: #374151;
+            color: #e5e7eb;
+            border: 1px solid #4b5563;
+            border-radius: 8px;
             font-weight: bold;
             transition: all 0.3s ease;
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
         }
         button:hover {
-            background-color: #505050;
-            border-color: #606060;
+            background-color: #4b5563;
+            border-color: #6b7280;
+            color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            transform: translateY(0);
         }
         ::placeholder {
-            color: #808080;
+            color: #6b7280;
+        }
+        .output-container {
+            position: relative;
+            margin-top: 15px;
+        }
+        #copy-button {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            width: auto;
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: transparent;
+            border-color: transparent;
+            color: #93c5fd;
+        }
+        #copy-button:hover {
+            background-color: rgba(147, 197, 253, 0.1);
+            border-color: #4b5563;
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .content {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5rem;
+                margin: 10px 0;
+            }
+            button {
+                padding: 12px 15px;
+            }
+            #copy-button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -78,7 +142,10 @@
             <button onclick="convertText(3)">Encode</button>
             <button onclick="convertText(-3)">Decode</button>
         </div>
-        <div id="output-text"></div>
+        <div class="output-container">
+            <div id="output-text"></div>
+            <button id="copy-button" onclick="copyOutput()">Copy</button>
+        </div>
     </div>
 
     <script>
@@ -111,6 +178,17 @@
             }).join('');
             
             document.getElementById('output-text').textContent = output;
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('output-text').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                const copyBtn = document.getElementById('copy-button');
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                }, 2000);
+            });
         }
     </script>
 </body>
